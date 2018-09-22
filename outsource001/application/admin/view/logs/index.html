@@ -1,0 +1,68 @@
+<form id="pagerForm" method="post" action="{#:site_url($controller)#}">
+    <input type="hidden" name="pageNum" value="{#$pages.page#}" />
+    <input type="hidden" name="numPerPage" value="{#$pages.page_list#}" />
+    <input type="hidden" name="note" value="{#$note#}" />
+</form>
+
+<div class="pageHeader">
+    <form onsubmit="return navTabSearch(this);" action="{#:site_url($controller)#}" method="post">
+        <div class="searchBar">
+            <table class="searchContent">
+                <tr>
+                    <td>
+                        备注：<input type="text" name="note" value="{#$note#}"/>
+                    </td>
+                    <td><div class="button"><div class="buttonContent"><button type="submit">&nbsp;&nbsp;搜&nbsp;&nbsp;索&nbsp;&nbsp;</button></div></div></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+
+<!--Excel导出-->
+<div class="pageHeader" >
+    <a href="{#:site_url('Api','exportExcel')#}" target="dwzExport" targetType="navTab"  title="是否导出这些记录?">导出EXCEL</a>
+</div>
+
+
+<div class="pageContent">
+
+    <table class="list" width="100%" layoutH="63">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>用户</th>
+            <th>类型</th>
+            <th>数量</th>
+            <th>兑换数量</th>
+            <th>内容备注</th>
+            <th>操作来源</th>
+            <th>创建时间</th>
+            <th>状态</th>
+            <th style="width: 80px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="rows" id="v"}
+        <tr target="sid" rel="{#$v.id#}">
+            <td>{#$v.id#}</td>
+            <td>{#$v.user_id#}</td>
+            <td>{#$v.type#}</td>
+            <td>{#$v.count#}</td>
+            <td>{#$v.ret_count#}</td>
+            <td>{#$v.note#}</td>
+            <td>{#$v.source#}</td>
+            <td>{#$v.create_time#}</td>
+            <td><a class="operationBtn" href="{#:site_url($controller, 'save', array('id' => $v['id'],'status'=>$v['is_status']))#}" target="ajaxTodo" title="确定要修改吗?">{#$v.status==1?"显示":"隐藏"#}</a></td>
+            <td>
+                <a class="operationBtn" href="{#:site_url($controller, 'info', array('id' => $v['id']))#}" target="dialog" mask="true" height="400" width="650" rel="cate_info" title="编辑菜单">编辑</a>
+
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    {#:page($pages)#}
+</div>
+<!--通用处理js-->
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>

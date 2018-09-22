@@ -1,0 +1,67 @@
+<form id="pagerForm" method="post" action="{#:site_url($controller)#}">
+    <input type="hidden" name="pageNum" value="{#$pages.page#}" />
+    <input type="hidden" name="numPerPage" value="{#$pages.page_list#}" />
+    <input type="hidden" name="title" value="{#$title#}" />
+</form>
+
+<div class="pageHeader">
+    <form onsubmit="return navTabSearch(this);" action="{#:site_url($controller)#}" method="post">
+        <div class="searchBar">
+            <table class="searchContent">
+                <tr>
+                    <td>
+                        标题：<input type="text" name="title" value="{#$title#}"/>
+                    </td>
+                    <td><div class="button"><div class="buttonContent"><button type="submit">&nbsp;&nbsp;搜&nbsp;&nbsp;索&nbsp;&nbsp;</button></div></div></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="pageContent">
+    <div class="panelBar">
+        <ul class="toolBar">
+            <li><a class="add" href="{#:site_url($controller, 'info')#}" target="dialog" height="300" width="650" rel="cate_info" mask="true"><span>添加</span></a></li>
+            <li class="line">line</li>
+            <li><a class="delete" href="{#:site_url($controller, 'save', array('id' => '{sid}','status'=>0))#}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+            <li class="line">line</li>
+            <li><a class="edit" href="{#:site_url($controller, 'info', array('id' => '{sid}'))#}" target="dialog" rel="cate_info" mask="true" height="400" width="650"><span>修改</span></a></li>
+        </ul>
+    </div>
+    <table class="list" width="100%" layoutH="63">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>用户</th>
+            <th>接受用户编号</th>
+            <th>标题</th>
+            <th>内容</th>
+            <th>状态</th>
+            <th>显示时间</th>
+            <th>创建时间</th>
+            <th style="width: 80px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="rows" id="v"}
+        <tr target="sid" rel="{#$v.id#}">
+            <td>{#$v.id#}</td>
+            <td>{#$v.user_id#}</td>
+            <td>{#$v.to_user_id#}</td>
+            <td>{#$v.title#}</td>
+            <td>{#$v.content#}</td>
+            <td><a class="operationBtn" href="{#:site_url($controller, 'save', array('id' => $v['id'],'status'=>$v['is_status']))#}" target="ajaxTodo" title="确定要修改吗?">{#$v.status==1?"显示":"隐藏"#}</a></td>
+            <td>{#$v.show_time|date="Y-m-d H:i:s",####}</td>
+            <td>{#$v.create_time#}</td>
+            <td>
+                <a class="operationBtn" href="{#:site_url($controller, 'info', array('id' => $v['id']))#}" target="dialog" mask="true" height="300" width="650" rel="cate_info" title="编辑菜单">编辑</a>
+
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    {#:page($pages)#}
+</div>
+<!--通用处理js-->
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>

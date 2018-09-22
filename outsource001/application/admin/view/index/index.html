@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{#$seo['title']#}</title>
+    <meta name="keywords" content="{#$seo['keywords']#}">
+    <meta name="description" content="{#$seo['description']#}">
+    <link rel="shortcut icon" href="__STATIC__/favicon.ico" type="image/x-icon"/>
+
+    <link href="__STATIC__/dwz/themes/default/style.css?v={#$cdn_version#}" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <link href="__STATIC__/dwz/themes/css/core.css?v={#$cdn_version#}" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="__STATIC__/dwz/themes/css/print.css?v={#$cdn_version#}" rel="stylesheet" type="text/css" media="print"/>
+    <link href="__STATIC__/dwz/uploadify/css/uploadify.css?v={#$cdn_version#}" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <!--[if IE]>
+    <link href="__STATIC__/dwz/themes/css/ieHack.css?v={#$cdn_version#}" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+    <script src="__STATIC__/dwz/js/speedup.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/jquery-1.11.3.min.js?v={#$cdn_version#}" type="text/javascript"></script><![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script src="__STATIC__/dwz/js/jquery-2.1.4.min.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <!--<![endif]-->
+
+    <script src="__STATIC__/dwz/js/jquery.cookie.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/jquery.validate.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <!--<script src="__STATIC__/dwz/js/jquery.bgiframe.js?v={#$cdn_version#}" type="text/javascript"></script>-->
+    <script src="__STATIC__/dwz/xheditor/xheditor-1.2.2.min.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/xheditor/xheditor_lang/zh-cn.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/uploadify/scripts/jquery.uploadify.js?v={#$cdn_version#}" type="text/javascript"></script>
+
+    <script type="text/javascript" src="__STATIC__/dwz/chart/echarts.min.js?v={#$cdn_version#}"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6PYkS1eDz5pMnyfO0jvBNE0F"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js?v={#$cdn_version#}"></script>
+
+    <script src="__STATIC__/dwz/js/dwz.core.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.util.date.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.validate.method.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.barDrag.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.drag.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.tree.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.accordion.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.ui.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.theme.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.switchEnv.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.alertMsg.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.contextmenu.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.navTab.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.tab.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.resize.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.dialog.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.dialogDrag.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.sortDrag.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.cssTable.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.stable.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.taskBar.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.ajax.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.pagination.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.database.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.datepicker.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.effects.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.panel.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.checkbox.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.history.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.combox.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.file.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/dwz/js/dwz.print.js?v={#$cdn_version#}" type="text/javascript"></script>
+
+    <!-- 可以用dwz.min.js替换前面全部dwz.*.js (注意：替换时下面dwz.regional.zh.js还需要引入)
+    <script src="bin/dwz.min.js?v={#$cdn_version#}" type="text/javascript"></script>
+    -->
+    <script src="__STATIC__/dwz/js/dwz.regional.zh.js?v={#$cdn_version#}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            DWZ.init("__STATIC__/dwz/dwz.frag.xml", {
+//                loginUrl:"login_dialog.html", loginTitle:"登录",	// 弹出登录对话框
+                loginUrl: "{#:site_url('AdminUser', 'login')#}",	// 跳到登录页面
+                statusCode: {ok: 200, error: 300, timeout: 301}, //【可选】
+                pageInfo: {
+                    pageNum: "pageNum",
+                    numPerPage: "numPerPage",
+                    orderField: "orderField",
+                    orderDirection: "orderDirection"
+                }, //【可选】
+                keys: {statusCode: "statusCode", message: "message"}, //【可选】
+                ui: {hideMode: 'offsets'}, //【可选】hideMode:navTab组件切换的隐藏方式，支持的值有’display’，’offsets’负数偏移位置的值，默认值为’display’
+                debug: true,	// 调试模式 【true|false】
+                callback: function () {
+                    initEnv();
+                    $("#themeList").theme({themeBase: "__STATIC__/dwz/themes"}); // themeBase 相对于index页面的主题base路径
+                    setInterval(function () {
+                        $('.navTab-tab').css('left', '0px');
+                    }, 300);
+                }
+            });
+
+            $('[project_id]').click(function () {
+
+                var project_id = 0;
+
+                $.cookie('project_id', $(this).attr('project_id'));
+
+                setTimeout(function () {
+                    location.href = '/admin.php';
+                }, 300);
+            });
+
+            /**
+             * http://www.uploadify.com/documentation/uploadify/onqueuecomplete/
+             */
+            function uploadifyMyQueueComplete(queueData) {
+
+                var msg = "The total number of files uploaded: " + queueData.uploadsSuccessful + "<br/>"
+                    + "The total number of errors while uploading: " + queueData.uploadsErrored + "<br/>"
+                    + "The total number of bytes uploaded: " + queueData.queueBytesUploaded + "<br/>"
+                    + "The average speed of all uploaded files: " + queueData.averageSpeed;
+
+                if (queueData.uploadsErrored) {
+                    console.log(msg);
+                } else {
+                    console.log(msg);
+                }
+            }
+
+            /**
+             * http://www.uploadify.com/documentation/uploadify/onuploadsuccess/
+             */
+            function uploadifyMySuccess(file, json, response) {
+                json = eval("(" + json + ")");
+
+                if (json.statusCode == 200) {
+                    var node_id = json['data']['node_id'];
+                    var url = json['data']['url'];
+                    if (node_id) {
+                        $('input[name=' + node_id + ']').val(url);
+                        $('._' + node_id).attr('src', url);
+                    }
+                } else {
+                    alertMsg.warn(json.message);
+                }
+            }
+
+            function uploadifyMyError(file, errorCode, errorMsg) {
+
+                alertMsg.warn(errorCode + "#" + errorMsg);
+            }
+        });
+    </script>
+    <script src="__STATIC__/admin/js/common.js?v={#$cdn_version#}" type="text/javascript"></script>
+    <script src="__STATIC__/admin/js/function.js?v={#$cdn_version#}" type="text/javascript"></script>
+
+    <link href="__STATIC__/admin/css/common.css?v={#$cdn_version#}" rel="stylesheet" type="text/css" media="screen"/>
+
+
+    <style type="text/css" media="screen">
+        .my-uploadify-button {
+            background: none;
+            border: none;
+            text-shadow: none;
+            border-radius: 0;
+        }
+
+        .uploadify:hover .my-uploadify-button {
+            background: none;
+            border: none;
+        }
+
+        .fileQueue {
+            width: 400px;
+            height: 150px;
+            overflow: auto;
+            border: 1px solid #E5E5E5;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body scroll="no">
+<div id="layout">
+    <div id="header">
+        <div class="headerNav">
+            <a class="logo" href="/admin.php">标志</a>
+            <ul class="nav">
+                {#:site_server_addr($showCate)#}
+                <li id="switchEnvBox" class="switchEnvBox"><a href="javascript:">{#$login_admin_user.name#}</a>
+                    <ul>
+                        {volist name="$roleList" id="v"}
+                        <li><a href="javascript:;">{#$v.name#}</a></li>
+                        {/volist}
+                    </ul>
+                </li>
+                <li><a href="{#:site_url('Adminuser', 'logout')#}">退出</a></li>
+            </ul>
+            <ul class="themeList" id="themeList">
+                <li theme="default">
+                    <div class="selected">蓝色</div>
+                </li>
+                <li theme="green">
+                    <div>绿色</div>
+                </li>
+                <li theme="purple">
+                    <div>紫色</div>
+                </li>
+                <li theme="silver">
+                    <div>银色</div>
+                </li>
+                <li theme="azure">
+                    <div>天蓝</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- navMenu -->
+
+    </div>
+
+    <div id="leftside">
+        <div id="sidebar_s">
+            <div class="collapse">
+                <div class="toggleCollapse">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div id="sidebar">
+            <div class="toggleCollapse"><h2>管理中心</h2>
+                <div>收缩</div>
+            </div>
+            {#:cate_sidebar($showCate,$userCateIds)#}
+        </div>
+    </div>
+    <div id="container">
+        <div id="navTab" class="tabsPage">
+            <div class="tabsPageHeader">
+                <div class="tabsPageHeaderContent"><!-- 显示左右控制时添加 class="tabsPageHeaderMargin" -->
+                    <ul class="navTab-tab">
+                        <li tabid="main" class="main"><a href="javascript:;"><span><span
+                                class="home_icon">我的主页</span></span></a></li>
+                    </ul>
+                </div>
+                <div class="tabsLeft">left</div><!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" -->
+                <div class="tabsRight">right</div><!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" -->
+                <div class="tabsMore">more</div>
+            </div>
+            <ul class="tabsMoreList">
+                <li><a href="javascript:;">我的主页</a></li>
+            </ul>
+            <div class="navTab-panel tabsPageContent layoutBox">
+                <div class="page unitBox">
+                    <div class="accountInfo">
+                        <div class="alertInfo">
+                            <p><a href="#" target="_blank" style="line-height:19px"><span>后台使用手册</span></a></p>
+                            <p><a href="#" target="_blank" style="line-height:19px;color: red">员工手册</a></p>
+                        </div>
+                        <div class="right">
+                            <p style="color:orange">百度：<a href="http://www.baidu.com" target="_blank">http://www.baidu.com</a>
+                            </p>
+                        </div>
+                        <p><span>百度！</span></p>
+                        <p>百度百科:<a href="http://www.baidu.com" target="_blank">http://www.baidu.com</a></p>
+                    </div>
+                    <div class="pageFormContent" layoutH="80">
+
+
+                        <h2>提示消息:</h2>
+                        <div class="unit"><a href="#" target="_blank">提示消息标题</a></div>
+                        <div class="unit"><a href="#" target="_blank">提示消息标题</a></div>
+                        <div class="unit"><a href="#" target="_blank">提示消息标题</a></div>
+                        <div class="unit"><a href="#" target="_blank">提示消息标题</a></div>
+                        <div class="unit"><a href="#" target="_blank">提示消息标题</a></div>
+                        <div class="unit"><a href="#" target="_blank">提示消息标题</a></div>
+
+
+                        <div class="divider"></div>
+                        <h2>后台使用常见问题:</h2>
+                        <pre style="margin:5px;line-height:1.4em">
+                        1.登录......
+                        2.注册......
+                        </pre>
+
+                        <div class="divider"></div>
+                        <h2>常用公司信息(<span style="color:red;">公司名称，公司开票信息.......</span>):</h2><br/>
+                        <pre style="margin:5px;line-height:1.4em;">
+                        公司名称：XXXXXXXXXXXXXXXX
+                        开票税号：XXXXXXXXXXXXXXXX
+                        公司地址：XXXXXXXXXXXXXXXX
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="footer">{#$seo.copyright#}</div>
+
+</body>
+</html>

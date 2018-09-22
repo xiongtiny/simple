@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>邀请好友</title>
+    <link rel="stylesheet" href="__STATIC__/bbus/css/reset.css">
+    <style>
+        .main{
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            color: #fff;
+        }
+        .main-bg{
+            background: url("__STATIC__/bbus/images/bg.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .con{
+            padding: 0 0.2rem;
+            padding-top: 6rem;
+
+        }
+        .con .con-bg{
+            background: url("__STATIC__/bbus/images/ju.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .title{
+            padding: 0.4rem;
+            text-align: center;
+        }
+        .title h2{
+            font-size: 0.48rem;
+            letter-spacing: 0.08rem;
+            margin-bottom: 0.3rem;
+        }
+        .title p{
+            text-align: left;
+            text-indent: 0.6rem;
+            letter-spacing: 0.06rem;
+            line-height: 1.5;
+            font-size: 0.24rem;
+        }
+        .want{
+            padding: 0 0.4rem;
+        }
+        .mine-bg{
+            background: url("__STATIC__/bbus/images/eb.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .mine{
+            display: flex;
+            justify-content:space-around;
+            height: 2.34rem;
+        }
+        .mine .want-eb{
+            height: 2rem;
+        }
+        .want-eb img{
+            width: 0.4rem;
+            height: 0.4rem;
+            vertical-align: middle;
+            margin-top: 0.3rem;
+        }
+        .want-eb .eb{
+            font-size: 0.36rem;
+        }
+        .mine .invite{
+            width: 2.62rem;
+            height: 0.8rem;
+            background-color: #fff;
+            border-radius: 20px;
+            text-align: center;
+            line-height: 0.8rem;
+            margin-top: 1.1rem;
+            box-shadow: 0 0 20px #4f15fb;
+        }
+        .mine .invite span{
+            display: block;
+            color: #3808B7;
+            font-size: 0.3rem;
+        }
+        .bg-paragraph{
+            padding-bottom: 0.45rem;
+            border-bottom: 1px solid #fff;
+            margin-bottom: 0.4rem;
+            color:#e8dfff;
+        }
+        .footer{
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.24rem;
+        }
+        .footer li{
+            width: 33%;
+            background: url("__STATIC__/bbus/images/jiao.png");
+            background-repeat: no-repeat;
+            background-size: 0.2rem 0.2rem;
+            background-position: 1.6rem 40%;
+        }
+        .footer li:last-child{
+            width: 34%;
+            background: none;
+        }
+        .footer li span{
+            display: block;
+            width: 60%;
+        }
+        .footer li:last-child span{
+            display: block;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<section class="main">
+
+    <img class="img-share" style="display:none;" id="share_imgs" data-userid="" src="/static/upload/{#$user_id#}.png" />
+    <div class="main-bg">
+        <div class="con">
+            <div class="con-bg">
+                <div class="title">
+                    <h2>分享赢EB算力</h2>
+                    <p>
+                        活动期间通过此页面，邀请好友注册累积获得150WT以上，即可获得BTC/ETF/云算力任选奖励，上不封顶
+                    </p>
+                </div>
+                <div class="want">
+                    <div class="mine-bg">
+                        <div class="mine">
+                            <div class="want-eb">
+                                <img src="__STATIC__/bbus/images/logo.png" alt="">
+                                <span class="eb">我要EB</span>
+                            </div>
+                            <div class="invite" id="invite" onclick="window.shengchen1()">
+                                <span>我要邀请</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="title">
+                    <!-- <h2>二重福利</h2> -->
+                    <p class="bg-paragraph">
+                        币巴士（B-Bus）是EBank生态中的的重要组成部分，币巴士作为一款可挖矿的币圈资讯类的DAPP，除了可以看行情资讯之外，其中的核心板块，讨论区和圈子，更是可以吸引到币圈的优质创作人，持续不断的输出优质内容，从而获得Ebank的打赏。币巴士采用了算力挖矿的方式，用户可以通过使用币巴士完成每日任务，登陆、签到、阅读文章、发文，参与优质文章的讨论等一系列激励任务获得算力，从而挖出Ebank，同时通过兑换、交易、数据分析、打赏，红包，购买vip 等也可以对Ebank进行消耗，这样有助于增加生态的持续性发展
+                    </p>
+                    <ul class="footer">
+                        <li><span>分享活动给好友</span></li>
+                        <li><span>好友接受邀请并注册成功</span></li>
+                        <li><span>算力自动发放至你的账号</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="__STATIC__/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function shengchen1(){
+
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
+        //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        var domain = document.domain;
+        var imgsrc='http://'+domain+$("#share_imgs").attr('src');
+//        var left="http://ytech.io/usershare/";
+//        var right=".png";
+        if (isAndroid==true){
+            location.href=imgsrc;
+            // jsInterface.choiceType({body:'jsneirong'});
+        }else if(isiOS==true){
+            window.webkit.messageHandlers.commonfunc.postMessage({imgsrc:imgsrc,code:'2'});
+        }
+    }
+</script>
+</body>
+</html>

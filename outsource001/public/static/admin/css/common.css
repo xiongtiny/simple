@@ -1,0 +1,60 @@
+@charset "utf-8";
+.my-uploadify-button {
+    background:none;
+    border: none;
+    text-shadow: none;
+    border-radius:0;
+}
+
+.uploadify:hover .my-uploadify-button {
+    background:none;
+    border: none;
+}
+
+.fileQueue {
+    width: 400px;
+    height: 150px;
+    overflow: auto;
+    border: 1px solid #E5E5E5;
+    margin-bottom: 10px;
+}
+
+table.mytable {
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #B8D0D6;
+    border-collapse: collapse;
+}
+table.mytable th {
+    background-color:#EEF4F5;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #B8D0D6;
+}
+table.mytable td {
+    background-color:#FFFFFF;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #B8D0D6;
+}
+
+.imageList{}
+.imageList li{
+    clear: none;
+    float: left;
+    width: 160px;
+}
+.imageList img{
+    height: 140px;width: 140px ;padding:6px;cursor: pointer;border: 1px solid #DEDEDE;
+}
+.imageList .imgSelect{
+    background-color:#b8d0d6;
+}
+
+.operationBtn{
+    color: #5A9CAC;
+}

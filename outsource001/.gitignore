@@ -1,0 +1,4 @@
+# Test Files #
+.idea/*
+/runtime/
+/public/static/upload/*

@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{#$seo['title']#}</title>
+    <link href="__STATIC__/dwz/themes/css/login.css" rel="stylesheet" type="text/css" />
+    <link type="image/vnd.microsoft.icon" href="__STATIC__/favicon.ico" rel="shortcut icon" />
+    <script src="__STATIC__/dwz/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function checkAgent(){
+            //强制推荐使用火狐或者chrome浏览器
+            var explorer = window.navigator.userAgent ;
+            var _is_alert_explorer = true;
+            if(explorer.indexOf("Firefox") >= 0 || explorer.indexOf("firefox") >= 0){
+                _is_alert_explorer = false;
+            }
+
+            if(explorer.indexOf("Chrome") >= 0 || explorer.indexOf("chrome") >= 0){
+                _is_alert_explorer = false;
+            }
+
+            if(explorer.indexOf("Safari") >= 0 || explorer.indexOf("safari") >= 0){
+                _is_alert_explorer = false;
+            }
+
+            if(_is_alert_explorer){
+                alert('请使用 火狐,Chrome或Safari 浏览器访问后台！可达到最佳体验效果！');
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div id="login">
+    <div id="login_header">
+        <h1 class="login_logo">
+            <a href="/"><img height="70%" width="70%" src="__STATIC__/dwz/themes/default/images/login_logo.png" /></a>
+        </h1>
+        <div class="login_headerContent">
+            <div class="navList">
+                <ul>
+                    <li><a href="javascript:void(0)" class="_set_index">设为首页</a></li>
+                    <li><a href="javascript:;">反馈</a></li>
+                    <li><a href="javascript:;">帮助</a></li>
+                </ul>
+            </div>
+            <h2 class="login_title"><img src="__STATIC__/dwz/themes/default/images/login_title.png" /></h2>
+        </div>
+    </div>
+    <div id="login_content">
+        <div class="loginForm">
+            <form action="{#:site_url('Adminuser', 'login')#}" method="post" id="_login_form" onsubmit="return checkLogin();">
+                <p>
+                    <label style="width: 60px">账号：</label>
+                    <input type="text" name="name" class="login_input" style="width: 140px"/>
+                </p>
+                <p>
+                    <label style="width: 60px">密码：</label>
+                    <input type="password" name="password" class="login_input"  style="width: 140px"/>
+                </p>
+                {if VALIDATE_IMAGE == true}
+                <p style="height: 30px">
+                    <label style="width: 60px">验证码：</label>
+                    <input type="text" name="image_code" value="" style="width: 55px"/>
+                    <span><img src="{#:site_url('Adminuser', 'loginimagecode')#}" align="absbottom" onclick="this.src='{#:site_url('Adminuser', 'loginimagecode')#}&'+Math.random();" width="75" height="24" class="_validateCode"/></span>
+                </p>
+                {/if}
+                {if VALIDATE_SMS == true}
+                <p class="_is_sms">
+                    <label style="width: 60px">短信码：</label>
+                    <input name="sms_code" type="text" value="" style="width: 55px"/>
+                    <a style="line-height: 25px;padding: 0 0 0 0px;width: 70px;font-size: 12px;cursor: pointer" class="_sms_verify">获取短信码<font></font></a>
+                </p>
+                {/if}
+                <div class="login_bar"  style="padding-left: 70px;padding-top: 10px">
+                    <input class="sub" type="submit" name="submit" value=" " />
+                </div>
+            </form>
+        </div>
+        <div class="login_banner"><img src="__STATIC__/dwz/themes/default/images/login_banner.jpg" /></div>
+        <div class="login_main">
+            <ul class="helpList" style="margin-top: 20px">
+                <li><a href="javascript:;">了解DATON</a></li>
+                <li><a href="javascript:;">DATON能帮您了解什么？</a></li>
+                <li><a href="javascript:;">DATON都有哪些功能？</a></li>
+                <li><a href="javascript:;">如何正取的使用DATON？</a></li>
+            </ul>
+            <div class="login_inner">
+                <p>您可以在DATON 订阅你所感兴趣的信息</p>
+                <p>您还可以参加DATON发起活动，赢取丰富大奖。</p>
+                <p>在 DATON 期待您的加入...</p>
+            </div>
+        </div>
+    </div>
+    <div id="login_footer">
+        {#$seo.copyright#}
+    </div>
+</div>
+<script type="text/javascript">
+    var _is_sms = false;
+    var _times = 60;
+
+    function sms_times(){
+        _times--;
+        if(_times > 0){
+            if(_is_sms == true){
+                $('._sms_verify').find('font').show();
+                $('._sms_verify').find('font').text('('+_times+')');
+                setTimeout("sms_times()", 1000);
+            }
+        }else{
+            $('._sms_verify').find('font').hide();
+            _is_sms = false;
+            _times = 60;
+        }
+    }
+
+    function obj2json(form_obj){
+        var o = {};
+
+        $.each(form_obj, function () {
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    }
+    
+    function checkLogin() {
+        var data    = obj2json($('#_login_form').serializeArray());
+
+        $.post("{#:site_url('Adminuser', 'login')#}",data,function(json){
+            json    = eval("("+json+")");
+            if(json.statusCode == 200){
+                window.location.href = "{#:site_url('Index', 'index')#}";
+            }else{
+
+                if(json.message == '请先获取手机验证码后再进行登录'){
+                    $('._is_sms').show();
+                }
+                alert(json.message);
+            }
+        });
+        return false;
+    }
+
+    function checkAutoLogin() {
+
+        $.post("{#:site_url('Adminuser', 'autoLogin')#}",{},function(json){
+            json    = eval("("+json+")");
+            if(json.statusCode == 200){
+                window.location.href = "{#:site_url('Index', 'index')#}";
+            }
+
+            console.log(json);
+        });
+        return false;
+    }
+
+    $(document).ready(function(){
+        checkAutoLogin();
+
+        $('._sms_verify').live('click', function(){
+            if(_is_sms == false && _times == 60){
+                var _name           = $.trim($('input[name=name]').val());
+                var _password       = $.trim($('input[name=password]').val());
+                var _validate_code  = $.trim($('input[name=validate_code]').val());
+
+                if((_name == null || _name == '' || _name == undefined)){
+                    alert('账号不能为空');
+                    return;
+                }
+
+                if((_password == null || _password == '' || _password == undefined)){
+                    alert('密码不能为空');
+                    return;
+                }
+
+                if($('input[name=validate_code]').length > 0){
+                    if((_validate_code == null || _validate_code == '' || _validate_code == undefined)){
+                        alert('验证码不能为空');
+                        return;
+                    }
+                }
+
+                _is_sms = true;
+                sms_times();
+
+                var _data = {};
+                _data['name']           = _name;
+                _data['password']       = _password;
+                _data['validate_code']  = _validate_code;
+
+                $.getJSON("{#:site_url('Adminuser', 'loginsendsmscode')#}", _data, function(json){
+                    if(json.statusCode == 200){
+                        alert(json.message);
+                    }else{
+                        _times = 1;
+                        alert(json.message);
+                    }
+                });
+            }else{
+                alert('验证码正在路上走，请耐心等一下~');
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<form id="pagerForm" method="post" action="{#:site_url($controller, $action);#}"></form>
+
+<div class="pageHeader">
+    <form rel="pagerForm" method="post" action="{#:site_url($controller, $action);#}" onsubmit="return dwzSearch(this, 'dialog');">
+        <div class="searchBar">
+            <table class="searchContent">
+                <tr>
+                    <td>
+                        角色名：<input type="text" name="name" value="{#$name#}"/>
+                        <input type="hidden" name="dialog_rel" value="{#$dialog_rel#}">
+                        <input type="hidden" name="parent_rel" value="{#$parent_rel#}">
+                        <input type="hidden" name="set_type" value="{#$set_type#}">
+                        <input type="hidden" name="user_id" value="{#$user_id#}">
+                    </td>
+                    <td><div class="button"><div class="buttonContent"><button type="submit">搜索</button></div></div></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="pageContent">
+    <table class="table" width="100%" targettype="dialog" layoutH="97">
+        <thead>
+        <tr>
+            <th width="22" align="center"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+            <th width="30" align="center">ID</th>
+            <th width="50" align="center">角色名称</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="v"}
+        <tr target="sid" rel="{#$v['id']#}">
+            <td><input name="ids" value="{#$v['id']#}_{#$v['name']#}" data-value="{#$v['id']#}" type="checkbox" {range name="v['id']" value="$role_ids" type="in"}checked{/range}></td>
+            <td>{#$v['id'];#}</td>
+            <td>{#$v['name'];#}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="formBar">
+        <ul>
+            <li><a class="button"  href="javascript:void(0);" onclick="{#$set_type=='submit'?'setUserRoleCallBack();':'addRoleCallBack();'#}"><span>确认</span></a></li>
+            <li><div class="button"><div class="buttonContent"><button class="close" type="button">关闭</button></div></div></li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function setUserRoleCallBack(){
+
+        var dialog  = $("body").data("{#$dialog_rel#}");
+        var el      = dialog.find("input[name='ids']:checked");
+
+        var user_id = "{#$user_id#}";
+
+        if(el.size()){
+            var ids = '';
+            el.each(function(){
+                ids += (ids == '' ? $(this).attr('data-value') : ',' + $(this).attr('data-value'));
+            });
+            $.post("{#:site_url($controller, $action);#}",{role_ids:ids,user_id:user_id},function(data){
+                data    = eval("("+data+")");
+
+                if(data.statusCode == 200){
+                    alertMsg.correct(data.message);
+                    navTab.reloadFlag("{#$parent_rel#}");
+                }else{
+                    alertMsg.error(data.message);
+                }
+            });
+
+        }else{
+            alertMsg.error('至少选择一个角色！');
+        }
+    }
+    {if condition="$set_type != 'submit'"}
+    function addRoleCallBack(){
+        var pdialog = $("body").data('{#$parent_rel#}');
+        var dialog = $("body").data('{#$dialog_rel#}');
+        var role_ids = [],role_names = [];
+        dialog.find("input:checked").filter("[name='ids']").each(function(i){
+            var _r = $(this).val().split('_');
+            role_ids.push(_r[0]);
+            role_names.push(_r[1]);
+        });
+        $('input[name="role_ids"]', pdialog).val(role_ids.join(','));
+        $('textarea[name="role_names"]', pdialog).val(role_names.join(','));
+        $.pdialog.closeCurrent();
+    }
+
+    (function($){
+        var pdialog = $("body").data('{#$parent_rel#}');
+        var sids = $('input[name="role_ids"]', pdialog).val().split(',');
+        setTimeout(function(){//这里代码有延迟事件，所以用setTimeout调整执行顺序
+            var dialog = $("body").data('{#$dialog_rel#}');
+            dialog.find("input[name='ids']").each(function(i){
+                if($.inArray($(this).val().split('_')[0],sids) != -1){
+                    $(this).attr('checked',true);
+                }
+            });
+        },0);
+    })(jQuery);
+    {/if}
+</script>

@@ -1,0 +1,67 @@
+<form id="pagerForm" method="post" action="{#:site_url($controller)#}">
+    <input type="hidden" name="pageNum" value="{#$pages.page#}" />
+    <input type="hidden" name="numPerPage" value="{#$pages.page_list#}" />
+    <input type="hidden" name="mobile" value="{#$mobile#}" />
+</form>
+
+<div class="pageHeader">
+    <form onsubmit="return navTabSearch(this);" action="{#:site_url($controller)#}" method="post">
+        <div class="searchBar">
+            <table class="searchContent">
+                <tr>
+                    <td>
+                        手机号：<input type="text" name="mobile" value="{#$mobile#}"/>
+                    </td>
+                    <td><div class="button"><div class="buttonContent"><button type="submit">&nbsp;&nbsp;搜&nbsp;&nbsp;索&nbsp;&nbsp;</button></div></div></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="pageContent">
+
+    <table class="list" width="100%" layoutH="63">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>用户</th>
+            <th>购买用户编号</th>
+            <th>数量</th>
+            <th>单价</th>
+            <th>订单状态</th>
+            <th>更新时间</th>
+            <th>创建时间</th>
+            <th style="width: 80px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="rows" id="v"}
+        <tr target="sid" rel="{#$v.id#}">
+            <td>{#$v.id#}</td>
+            <td>{#$v.user_id#}</td>
+            <td>{#$v.buy_user_id#}</td>
+            <td>{#$v.num#}</td>
+            <td>{#$v.price#}</td>
+            <td style="color:{#$v.status==2?'blue':'red'#}">
+                {if $v['status']==0}
+                <a class="operationBtn" href="{#:site_url($controller, 'save', array('id' => $v['id'],'status'=>1))#}" target="ajaxTodo" title="确定要修改为成交吗?">新订单</a>
+                {elseif $v['status']==1}
+                <a class="operationBtn" href="{#:site_url($controller, 'save', array('id' => $v['id'],'status'=>2))#}" target="ajaxTodo" title="确定要修改为关闭吗?">成交</a>
+                {else}
+                <a class="operationBtn" href="{#:site_url($controller, 'save', array('id' => $v['id'],'status'=>0))#}" target="ajaxTodo" title="确定要修改为新订单吗?">关闭</a>
+                {/if}
+            </td>
+            <td>{#$v.last_time#}</td>
+            <td>{#$v.create_time#}</td>
+            <td>
+                <a class="operationBtn" href="{#:site_url($controller, 'info', array('id' => $v['id']))#}" target="dialog" mask="true" height="200" width="650" rel="cate_info" title="编辑菜单">编辑</a>
+
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    {#:page($pages)#}
+</div>
+<!--通用处理js-->
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>

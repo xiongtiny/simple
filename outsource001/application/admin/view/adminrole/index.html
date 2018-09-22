@@ -1,0 +1,60 @@
+<form id="pagerForm" method="post" action="{#:site_url($controller)#}">
+    <input type="hidden" name="pageNum" value="{#$pages.page#}" />
+    <input type="hidden" name="numPerPage" value="{#$pages.page_list#}" />
+    <input type="hidden" name="name" value="{#$name#}" />
+</form>
+
+<div class="pageHeader">
+    <form onsubmit="return navTabSearch(this);" action="{#:site_url($controller)#}" method="post">
+        <div class="searchBar">
+            <table class="searchContent">
+                <tr>
+                    <td>
+                        角色名称：<input type="text" name="name" value="{#$name#}"/>
+                    </td>
+                    <td><div class="button"><div class="buttonContent"><button type="submit">&nbsp;&nbsp;搜&nbsp;&nbsp;索&nbsp;&nbsp;</button></div></div></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="pageContent">
+    <div class="panelBar">
+        <ul class="toolBar">
+            <li><a class="add" href="{#:site_url($controller, 'info')#}" target="dialog" height="260" width="650" rel="cate_info" mask="true"><span>添加</span></a></li>
+            <li class="line">line</li>
+            <li><a class="delete" href="{#:site_url($controller, 'del', array('id' => '{sid}'))#}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+            <li class="line">line</li>
+            <li><a class="edit" href="{#:site_url($controller, 'info', array('id' => '{sid}'))#}" target="dialog" rel="cate_info" mask="true" height="260" width="650"><span>修改</span></a></li>
+        </ul>
+    </div>
+    <table class="table" width="100%" layoutH="112">
+        <thead>
+        <tr>
+            <th>管理角色ID</th>
+            <th>名称</th>
+            <th style="width: 40px;">状态</th>
+            <th>排序</th>
+            <th style="width: 140px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="rows" id="v"}
+            <tr target="sid" rel="{#$v.id#}">
+                <td>{#$v.id#}</td>
+                <td>{#$v.name#}</td>
+                <td style="color: {#$v.status==2?'blue':'red'#}">{#$v.status==2?'显示':'隐藏'#}</td>
+                <td>{#$v.rank#}</td>
+                <td>
+                    <a class="operationBtn" href="{#:site_url('AdminCate', 'setcatehasrole', array('id' => $v['id'], 'dialog_rel' => 'set_cate_has_role'))#}" target="dialog" height="500" width="450" mask="true" title="{#$v.name#}-设置权限" rel="set_cate_has_role">设置权限</a>
+                    &nbsp;&nbsp;<a class="operationBtn" href="{#:site_url($controller, 'info', array('id' => $v['id']))#}" target="dialog" mask="true" height="260" width="650" rel="cate_info" title="编辑菜单">编辑</a>
+                    &nbsp;&nbsp;<a class="operationBtn" href="{#:site_url($controller, 'del', array('id' => $v['id']))#}" target="ajaxTodo" title="确定要删除吗?">删除</a>
+                </td>
+            </tr>
+        {/volist}
+        </tbody>
+    </table>
+    {#:page($pages)#}
+</div>
+<!--通用处理js-->
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>

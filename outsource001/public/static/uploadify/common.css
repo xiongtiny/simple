@@ -1,0 +1,26 @@
+@charset "utf-8";
+.my-uploadify-button {
+    background:none;
+    border: none;
+    text-shadow: none;
+    border-radius:0;
+    color: white;
+}
+
+.uploadify:hover .my-uploadify-button {
+    background:none;
+    border: none;
+}
+
+.fileQueue {
+    width: 400px;
+    height: 150px;
+    overflow: auto;
+    border: 1px solid #E5E5E5;
+    margin-bottom: 10px;
+}
+.uploadify-queue-item{
+    margin-left: 0px;
+    margin-top: -43px;
+    width: 300px;
+}

@@ -1,0 +1,180 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<style type="text/css">
+	input{width:100%}
+</style>
+ {/block}
+{block name="main"}
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="/admin/v1/student/index">学生管理</a>
+							</li>
+							<li>
+								<a href="/admin/v1/student/talk?id={$user_data['id']}">沟通历史</a>
+							</li>
+							<li class="active">添加记录</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								添加沟通记录
+								<small>
+									<i class="icon-double-angle-right"></i>
+									【 姓名:{$user_data['username']}&nbsp;&nbsp;&nbsp;&nbsp;ID:{$user_data['number']}】
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form class="form-horizontal" action="/admin/v1/student/add_talk" method="post" role="form" id="form">
+									<input type="hidden" name="user_id" value="{$user_data['id']}">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 学籍号 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+											<input type="text" value="{$user_data['number']}"  disabled />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 姓名 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+											<input type="text" value="{$user_data['username']}"  disabled />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 记录人姓名 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+											<input type="text" name="note_user" placeholder="记录人姓名" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 沟通类型 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+										<select class="form-control" name="type">
+											<option value="">请选择</option>
+											<option value="1">电话</option>
+											<option value="2">微信</option>
+											<option value="3">QQ</option>
+											<option value="4">短信</option>
+											<option value="5">邮件</option>
+											<option value="6">到访</option>
+											<option value="7">其他</option>
+										</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 沟通时间 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+											<input type="text" name="talk_time" placeholder="沟通时间系统自动生成" disabled />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 选择阶段 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+										<select class="form-control" name="stage">
+											<option value="">请选择</option>
+											<option value="1">售前</option>
+											<option value="2">售后</option>
+										</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 沟通内容 <span style="color: red">*</span></label>
+										<div class="col-sm-3">
+											<textarea name="content" style="width:100%;border:1px solid #4b89aa" placeholder="请输入沟通内容"></textarea>
+										</div>
+									</div>
+									
+									<div class="space-4"></div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-primary" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+											&nbsp; &nbsp; &nbsp;
+											<a href="javascript:history.back(-1)"><button class="btn" type="button">
+												<i class="icon-undo bigger-110"></i>
+												返回
+											</button></a>
+										</div>
+									</div>
+
+									<div class="hr hr-24"></div>	
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+
+{/block}
+
+{block name="js"} 
+		<!-- inline scripts related to this page -->
+<script type="text/javascript">
+	$("form").submit(function () {
+		$.ajax({
+			url:"/admin/v1/student/add_talk",
+			type:"post",
+			data:$("#form").serialize(),
+			success:function (data) {
+			    if(data.code!=200){
+			        alert(data.message);
+			        return;
+				}
+
+				alert(data.message);
+			    location.href='/admin/v1/student/talk?id={$user_data.id}'
+            }
+		})
+
+		return false;
+    })
+</script>	
+	
+{/block}

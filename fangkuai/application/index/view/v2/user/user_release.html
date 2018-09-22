@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的农场</title>	
+<body>
+	{include file="/v2/public/foot" /}
+	<div class="myFarm">
+
+		<div class="myFarm_top"><!-- 头部 -->
+			<div class="myFarm_top_left">
+			<a href="user_lease.html" style="color: #000000;">
+				<div class="myFarm_title">我租赁的农场</div></a>
+			</div>
+			<div class="myFarm_top_right"><a href="user_release.html">
+				<div class="myFarm_title_active">我发布的农场</div></a>
+			</div>
+		</div>
+			
+	<!-- 	<div>
+			<button></button>
+		</div> -->
+		<div class="myFarm_content"><!-- 内容 -->
+			
+			{foreach name="data" item="vo"}
+			<form action="" >
+
+			<div class="myFarm_content_1"><!-- 已上线 -->
+					<div class="farmlive_1 myFarm_content_1_up">
+						<a href="/api/v2/farm/farm_detail.html?farm_id={$vo.id}">
+						<div class="farmlive_2">
+							<div class="farmlive_pic"><img src="{$vo.img}" alt=""></div>
+							<div class="farmlive_text">
+								<div class="farmlive_top">
+									<div class="farmlive_top_left"><span class="farmlive_top">{$vo.name}</span></div>
+									<div class="farmlive_top_right"><span class="farmlive_money_color">{$vo.price}</span><span class="farmlive_money">元/
+										{switch $vo.lease_type }
+											    {case 1 }年{/case}
+											    {case 2}半年{/case}
+											    {case 3}季{/case}
+											    {case 4}月{/case}
+											    {default /}
+											{/switch}</span></div>			
+								</div>
+								<div class="farmlive_address"><img src="/phone/image/ico_6.png" alt="" style="width:5%;height:5%;margin-right:2px;">{$vo.province}{$vo.city}{$vo.area}</div>
+								{if condition="$vo.type == 0"}
+								<div class="farmlive_button">
+									<span class="myFarm_time">上线时间&nbsp;:&nbsp;{$vo.start_time|strtotime|date="Y-m-d"}</span>
+								</div>
+								
+								{else/}
+								<div class="farmlive_button">
+									<span class="myFarm_time">租赁时间&nbsp;:&nbsp;&nbsp;{$vo.start_time|strtotime|date="Y-m-d"}至&nbsp;{$vo.downline_time|strtotime|date="Y-m-d"}</span>
+								</div>
+								{/if}								
+								
+							</div>
+						</div>
+						</a>
+					</div>
+					
+					{if condition="$vo.type == 0"}
+					<div class="myFarm_content_1_down">
+						<div class="myFarm_content_1_down_left">已上线
+
+						<button  class="myFarm_button del_farm" id="{$vo.id}">删除</button>
+						<button  class="myFarm_button_1 downline" id="{$vo.id}">下线</button>	
+						</div>
+					</div>
+					{/if}
+					{if condition="$vo.type == 1"}
+					<div class="myFarm_content_1_down">
+						<div class="myFarm_content_1_down_left">已出租						
+						</div>
+					</div>
+					{/if}
+					{if condition="$vo.type == 2"}
+					<div class="myFarm_content_1_down_left">已下线
+						<button  class="myFarm_button del_farm" id="{$vo.id}">删除</button>
+						<!-- <button class="myFarm_button_1" onclick="window.open('publish1.html')">修改</button>-->
+
+						</div>
+					{/if}
+					{if condition="$vo.type == 3"}
+					<div class="myFarm_content_1_down_left">已下线
+						<button  class="myFarm_button del_farm" id="{$vo.id}">删除</button>
+						<!-- <button  class="myFarm_button_1" onclick="window.open('publish1.html')">修改</button> -->
+						<a  class="myFarm_button_1" href="/api/v2/farm/edit_farm?farm_id={$vo.id}">修改</a>
+						</div>
+					{/if}
+					{/foreach}	
+
+			</div>
+			</form>	
+
+		</div>
+		<div class="bottom_jia">
+			<a href="/api/v2/farm/publish"><button type="button" class="bottom_jia1" ><span class="icon-ico_jia"></span></button></a>
+		</div>	
+
+	</div>
+	<div class="bottom"><!-- 底部 -->
+	<div class="bottom_1">
+	<a href="/api/v2/index/index.html" class="bottom_a">
+		<div><span class="icon-ico_5 ico_size"></span></div>
+		<div><span>首页</span></div>
+	</a>
+	</div>
+	<div class="bottom_1">
+	<a href="/api/v2/farm/farm_list.html" class="bottom_a">
+		<div><span class="icon-ico_2 ico_size"></span></div>
+		<div><span>智慧农业</span></div>
+	</a>
+	</div>
+	<div class="bottom_1">
+	<a href="/api/v2/user/user_lease.html" class="bottom_a_active">
+		<div><span class="icon-ico_3 ico_size"></span></div>
+		<div><span>我的农场</span></div>
+	</a>
+	</div>
+	<div class="bottom_1">
+	<a href="/api/v2/user/my.html" class="bottom_a">
+		<div><span class="icon-ico_1 ico_size"></span></div>
+		<div><span>我的</span></div>
+	</a>
+	</div>
+</div>
+
+	
+</body>
+</html>
+<script src="/static/js/jquery.min.js"></script>
+<script type="text/javascript">		
+	   $(".del_farm").click(function () {
+	   	var farm_id = $(this).attr('id');
+	   
+        $.ajax({
+            url:"/api/v2/user/del_farm",
+            type:"post",
+            data:{farm_id:farm_id},
+            success:function (data) {
+                if(data.code==200){
+                    alert(data.message);
+                    location.href="/api/v2/user/user_release";              
+                    return;
+                }else{
+                	alert(data.message);
+                }
+            }
+        })
+        return false;
+    })
+</script>
+<script type="text/javascript">		
+	   $(".downline").click(function () {
+	   	var farm_id = $(this).attr('id');
+	   	console.log(farm_id);
+        $.ajax({
+            url:"/api/v2/user/downline",
+            type:"post",
+            data:{farm_id:farm_id},
+            success:function (data) {
+                if(data.code==200){
+                    alert(data.message);
+                    location.href="/api/v2/user/user_release";              
+                    return;
+                }else{
+                	alert(data.message);
+                }
+            }
+        })
+        return false;
+    })
+</script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>方块智慧农业</title>
+	<link rel="stylesheet" href="/phone/css/bootstrap.css">
+	<link rel="stylesheet" href="/phone/css/style.css">	
+	<script src="/phone/jq/jquery.min.js"></script>
+	<script src="/phone/js/bootstrap.min.js"></script>
+	<script src="/phone/js/toucher.js"></script>
+	<link href="/phone/css/cropper.min.css" rel="stylesheet">
+	<link href="/phone/css/sitelogo.css" rel="stylesheet">
+	<script src="/phone/js/cropper.min.js"></script>
+	<script src="/phone/js/sitelogo.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
+	<meta name="apple-mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+	<meta name="format-detection" content="telephone=no"> 
+</head>
+<body>
+
+<script> 
+var myTouch = util.toucher(document.getElementById('myCarousel')); 
+myTouch.on('swipeLeft',function(e){ 
+$('#carright').click(); 
+}).on('swipeRight',function(e){ 
+$('#carleft').click(); 
+}); 
+</script>
+</body>
+</html>

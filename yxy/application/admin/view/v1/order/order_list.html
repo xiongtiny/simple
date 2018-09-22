@@ -1,0 +1,209 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<style type="text/css">
+	input{width:100%}
+	.row span{color: #2679b5; font-weight: bold;}
+</style>
+ {/block}
+{block name="main"}
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="#">招生管理</a>
+							</li>
+							<li>
+								<a href="/admin/v1/student/my_student">我的学生</a>
+							</li>
+							<li class="active">订单历史</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<a href="/admin/v1/student/edit_my_student?id={$id}"><button class="btn btn-success">编辑学生</button></a>
+							<a href="#"><button class="btn disabled btn-warning">历史订单</button></a>
+							<a href="/admin/v1/student/talk?id={$id}"><button class="btn btn-primary">沟通历史</button></a>
+						</div>
+
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form class="form-horizontal" action="/admin/v1/student/edit_post" method="post" role="form">
+									<input type="hidden" name="id" value=""  placeholder="姓名" />
+
+									<div class="hr-24"></div>
+									<span>用户信息</span>
+									<span style="padding-left: 40px;">姓名：{$user_data['username']}</span>
+									<span style="padding-left: 20px;">ID：{$user_data['number']}</span>
+									<div class="hr"></div>
+									<div class="hr-24"></div>
+									<span>购课订单</span>
+
+								{foreach name="data" item="vo"}	
+								<div class="hr"></div>
+								<li>	
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 订单号 </label>
+										<div class="col-sm-2">
+											<input type="text" value="{$vo['order_no']}" disabled />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 下单时间 </label>
+										<div class="col-sm-2">
+											<input type="text" value="{$vo['create_time']}" disabled />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 订单状态 </label>
+										<div class="col-sm-2">
+											<input type="text" value="{if condition="$vo['status'] == 0"}未支付{/if}{if condition="$vo['status'] == 1"}已支付{/if}{if condition="$vo['status'] == 2"}已取消{/if}{if condition="$vo['status'] == 3"}已退款{/if}" disabled />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 订单名称 </label>
+										<div class="col-sm-2">
+											<input type="text" value="{$vo['course']}" disabled />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课类型 </label>
+										<div class="col-sm-2">
+											<input type="text" value="{if condition="$vo['type'] == 1"}班级课{/if}{if condition="$vo['type'] == 1"}1对1{/if}" disabled />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课形式 </label>
+										<div class="col-sm-2">
+											<input type="text" value="{if condition="$vo['mode'] == 1"}线上直播{/if}{if condition="$vo['mode'] == 2"}面授{/if}" disabled />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 优惠金额 </label>
+										<div class="col-sm-2">
+											<input type="text" value="{$vo['reduce_price']}" disabled />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 支付方式 </label>
+										<div class="col-sm-2">
+											<input type="text" value="" disabled />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 支付金额 </label>
+										<div class="col-sm-2">
+											<input type="text" value="{$vo['price']}" disabled />
+										</div>
+									</div>
+								</li>
+								{/foreach}
+
+			
+									<div class="space-4"></div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<a href="javascript:history.back(-1)"><button class="btn" type="button">
+												<i class="icon-undo bigger-110"></i>
+												返回
+											</button></a>
+										</div>
+									</div>
+
+									<div class="hr hr-24"></div>	
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif]-->
+
+		<!--[if !IE]> -->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='/admin/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='/admin/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='/admin/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="/admin/js/bootstrap.min.js"></script>
+		<script src="/admin/js/typeahead-bs2.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="/admin/js/excanvas.min.js"></script>
+		<![endif]-->
+
+		<script src="/admin/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="/admin/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="/admin/js/chosen.jquery.min.js"></script>
+		<script src="/admin/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="/admin/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="/admin/js/date-time/bootstrap-timepicker.min.js"></script>
+		<script src="/admin/js/date-time/moment.min.js"></script>
+		<script src="/admin/js/date-time/daterangepicker.min.js"></script>
+		<script src="/admin/js/bootstrap-colorpicker.min.js"></script>
+		<script src="/admin/js/jquery.knob.min.js"></script>
+		<script src="/admin/js/jquery.autosize.min.js"></script>
+		<script src="/admin/js/jquery.inputlimiter.1.3.1.min.js"></script>
+		<script src="/admin/js/jquery.maskedinput.min.js"></script>
+		<script src="/admin/js/bootstrap-tag.min.js"></script>
+
+		<!-- ace scripts -->
+
+		<script src="/admin/js/ace-elements.min.js"></script>
+		<script src="/admin/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+
+{/block}
+
+{block name="js"} 
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			
+		</script>	
+	
+{/block}

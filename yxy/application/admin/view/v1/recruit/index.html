@@ -1,0 +1,157 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+{/block}
+{block name="main"}
+
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="#">首页</a>
+            </li>
+
+            <li>
+                <a href="#">信息预览</a>
+            </li>
+            <li class="active">招聘信息</li>
+        </ul><!-- .breadcrumb -->
+
+        <div class="nav-search" id="nav-search">
+            <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+            </form>
+        </div><!-- #nav-search -->
+    </div>
+
+    <div class="page-content">
+        <!--	<div class="page-header">
+                <h1>
+                    班级课列表
+                    <small>
+                        <i class="icon-double-angle-right"></i>
+                        Static &amp; Dynamic Tables
+                    </small>
+                </h1>
+            </div>&lt;!&ndash; /.page-header &ndash;&gt;
+            <div class="page-header">
+                <a href="/admin/v1/course/add"><button class="btn btn-primary">新增</button></a>
+                <button class="btn btn-primary">批量上线</button>
+                <button class="btn btn-warning">删除</button>
+                <button class="btn btn-warning">批量下线</button>
+                <button class="btn btn-info">导出</button>
+            </div>-->
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table id="sample-table-1" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--金额、支付时间、支付方式、支付状态-->
+                                    <th>ID</th>
+                                    <th>职位</th>
+                                    <th>姓名</th>
+                                    <th>工作年限</th>
+                                    <th>学历</th>
+                                    <th>电话</th>
+                                    <th>提交时间</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {foreach $recruits as $recruit}
+                                <tr>
+
+                                    <td>
+                                        <a href="#">{$recruit->id}</a>
+                                    </td>
+                                    <td>{$recruit->occupation}</td>
+                                    <td>{$recruit->username}</td>
+                                    <td>{$recruit->working_life}</td>
+                                    <td>{$recruit->education}</td>
+                                    <td>{$recruit->phone}</td>
+                                    <td>{$recruit->create_time}</td>
+                                </tr>
+                                {/foreach}
+                                </tbody>
+                            </table>
+                        </div><!-- /.table-responsive -->
+                    </div><!-- /span -->
+                </div><!-- /row -->
+
+
+                <div class="hr hr-18 dotted hr-double"></div>
+
+            </div>
+
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    <div class="text-center">
+        {$recruits->render()|raw}
+    </div>
+</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+
+</div><!-- /.main-container-inner -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
+</div><!-- /.main-container -->
+{/block}
+
+{block name="js"}
+<script type="text/javascript">
+    jQuery(function($) {
+        var oTable1 = $('#sample-table-2').dataTable( {
+            "aoColumns": [
+                { "bSortable": false },
+                null, null,null, null, null,
+                { "bSortable": false }
+            ] } );
+
+
+        $('table th input:checkbox').on('click' , function(){
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    this.checked = that.checked;
+                    $(this).closest('tr').toggleClass('selected');
+                });
+
+        });
+
+
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+            var $source = $(source);
+            var $parent = $source.closest('table')
+            var off1 = $parent.offset();
+            var w1 = $parent.width();
+
+            var off2 = $source.offset();
+            var w2 = $source.width();
+
+            if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+            return 'left';
+        }
+    })
+</script>
+
+{/block}

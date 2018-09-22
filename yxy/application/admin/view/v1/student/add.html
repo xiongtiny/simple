@@ -1,0 +1,241 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<style type="text/css">
+	input{width:100%}
+</style>
+ {/block}
+{block name="main"}
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="/admin/v1/student/index">学生管理</a>
+							</li>
+							<li class="active">新增学生</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								新增学生
+								<small>
+									<i class="icon-double-angle-right"></i>
+									Add student
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form class="form-horizontal" action="" method="post" role="form" id="form">
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 学籍号 </label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="系统自动生成学籍号"  disabled />
+										</div>
+										<span style="color: red"> * </span>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 姓名 </label>
+										<div class="col-sm-2">
+											<input type="text" name="username" placeholder="姓名" />
+										</div>
+										<span style="color: red"> * </span>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 手机号 </label>
+										<div class="col-sm-2">
+											<input type="number" name="phone" placeholder="手机号" />
+										</div>
+										<span style="color: red"> * </span>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 年级 </label>
+										<div class="col-sm-2">
+										<select class="form-control" name="grade">
+											<option value="">请选择</option>
+											<option value="1">一年级</option>
+											<option value="2">二年级</option>
+											<option value="3">三年级</option>
+											<option value="4">四年级</option>
+											<option value="5">五年级</option>
+											<option value="6">六年级</option>s
+											<option value="7">初一</option>
+											<option value="8">初二</option>
+											<option value="9">初三</option>
+											<option value="10">高一</option>
+											<option value="11">高二</option>
+											<option value="12">高三</option>
+										</select>
+										</div>
+										<span style="color: red"> * </span>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 意向课程 </label>
+										<div class="col-sm-2">
+										<select class="form-control" name="subject">
+											<option value="">请选择</option>
+											<option value="1">语文</option>
+											<option value="2">数学</option>
+											<option value="3">英语</option>
+											<option value="4">物理</option>
+											<option value="5">化学</option>
+											<option value="6">生物</option>
+											<option value="7">政治</option>
+											<option value="8">历史</option>
+											<option value="9">地理</option>
+										</select>
+										</div>
+										<span style="color: red"> * </span>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 招生来源 </label>
+										<div class="col-sm-2">
+										<select class="form-control" name="type">
+											<option value="">请选择</option>
+											<option value="2">在线咨询</option>
+											<option value="3">地推路演</option>
+											<option value="4">转介绍</option>
+										</select>
+										</div>
+										<span style="color: red"> * </span>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 密码 </label>
+										<div class="col-sm-2">
+											<input type="password" name="password" placeholder="密码" />
+										</div>
+										<span style="color: red"> * 密码长度不可小于6位数</span>
+									</div>
+
+									
+									<div class="space-4"></div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-primary" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+											&nbsp; &nbsp; &nbsp;
+											<a href="/admin/v1/student/index"><button class="btn" type="button">
+												<i class="icon-undo bigger-110"></i>
+												返回
+											</button></a>
+											
+										</div>
+									</div>
+
+									<div class="hr hr-24"></div>	
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+{/block}
+
+{block name="js"} 
+
+<script type="text/javascript">
+
+    $("form").submit(function(){
+      	var username=$("input[name='username']").val();
+      	var phone=$("input[name='phone']").val();
+      	var grade=$("select[name='grade']").val();
+      	var subject=$("select[name='subject']").val();
+      	var password=$("input[name='password']").val();
+
+		if(username==''){
+			layer.msg('请输入学生姓名');
+			return false;
+		}
+		if(phone==''){
+			layer.msg("请输入电话号码");
+			return false;
+		}
+		if(grade==''){
+			layer.msg("请选择年级");
+			return false;
+		}
+		if(subject==''){
+			layer.msg("请选择意向课程");
+			return false;
+		}
+		if(password==''){
+			layer.msg("请输入密码");
+			return false;
+		}
+
+        $.ajax({
+            url:'/admin/v1/student/add',
+            data:new FormData($('#form')[0]),
+            processData: false,
+            contentType: false,
+            type: 'post',
+            success: function($data) {
+                if($data.code == 200){
+                    layer.open({
+						content: $data.message,
+						btn: ['确定'],
+							yes: function(index, layero){
+								location.href='/admin/v1/student/index';
+							},
+							cancel: function(){ 
+							//右上角关闭回调
+							return false //该代码可禁止点击该按钮关闭
+							}
+					});
+                    
+                }else{
+                	layer.msg($data.message, {icon: 5});
+                }
+            }
+    	});
+        return false;
+    });
+        
+</script>
+
+	
+{/block}

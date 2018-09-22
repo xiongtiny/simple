@@ -1,0 +1,180 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+ {/block}
+{block name="main"}
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="#">新闻管理</a>
+							</li>
+							<li class="active">新增新闻</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								新增新闻
+								<small>
+									<i class="icon-double-angle-right"></i>
+									Add News
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form action="/admin/v1/news/add_news" method="post" class="form-horizontal" role="form" id="form">
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 新闻标题 <span style="color: red">*</span></label>
+										<div class="col-sm-9">
+											<input name="title" type="text" id="form-field-1" placeholder="新闻标题请不要超过20字" class="col-xs-10 col-sm-5" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 新闻图片 <span style="color: red">*</span></label>
+										<div class="col-sm-4">
+											<input multiple="" name="photo" type="file" id="id-input-file-3" />
+											<input type="checkbox" name="file-format" id="id-file-format" class="ace" />
+											<span class="lbl"> Allow only images</span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 新闻内容 <span style="color: red">*</span></label>
+										<div class="col-sm-6">
+											<script id="form-field-8" name="content" type="text/plain"></script>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="" class="col-sm-3 control-label no-padding-right">发布 <span style="color: red">*</span></label>
+										<div class="col-sm-4">
+											<input type="radio" name="status"  value="0">不发布
+											<input type="radio" name="status" value="1">发布
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 类别 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+										<select name="type" class="form-control" id="form-field-select-1">
+											{foreach $news_type as  $type}
+											<option value="{$type.id}">{$type.name}</option>
+											{/foreach}
+										</select>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-primary" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<!-- <button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												重置
+											</button> -->
+											<a href="/admin/v1/news/news_list"><button class="btn" type="button">
+												<i class="icon-undo bigger-110"></i>
+												返回
+											</button></a>
+										</div>
+									</div>
+
+									<div class="hr hr-24"></div>	
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+
+{/block}
+
+{block name="js"} 
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			$("#form").submit(function () {
+				var title=$("input[name='title']").val();
+		      	var photo=$("input[name='photo']").val();
+		      	var content=$("#form-field-8[name='content']").val();
+
+			    var formData=new FormData($("#form")[0]);
+				$.ajax({
+					url:"/admin/v1/news/add_news",
+					type:'post',
+                    processData : false,
+                    contentType : false,
+					data:formData,
+					success: function($data) {
+						console.log($data);
+		                if($data.code == 200){
+		                    layer.open({
+								content: $data.message,
+								btn: ['确定'],
+									yes: function(index, layero){
+										location.href='/admin/v1/news/news_list';
+									},
+									cancel: function(){ 
+									//右上角关闭回调
+									return false //该代码可禁止点击该按钮关闭
+									}
+							});
+		                    
+		                }else{
+		                	layer.msg($data.message);
+		                }
+		            }
+				})
+				return false;
+            })
+
+		</script>
+<script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+    var editor = UE.getEditor('form-field-8');
+</script>
+	
+{/block}

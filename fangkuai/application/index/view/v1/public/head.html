@@ -1,0 +1,16 @@
+<div id="top"><!-- 头部 -->
+    <div class="container" id="top_main">
+			<span id="top_left">
+				联系我们: <a href="#" id="top_phone">400-1895555</a>
+			</span>
+        <span id="top_right">
+			{if(empty($Request.session.user)&&empty($Request.session.phone))}
+			<a style="text-decoration: none;" href="/index.php/api/v1/index/login1" id="top_login">登录</a>&nbsp;|&nbsp;<a style="text-decoration: none;" href="/index.php/api/v1/index/register1" id="top_logon">注册</a>
+			{elseif(empty($Request.session.user))}
+            <a style="..." href="#" id="top_login">欢迎您，{$Request.session.phone}</a>&nbsp;|&nbsp;<a style="..." href="/index.php/api/v1/index/exit_login" id="top_logon">退出</a> &nbsp;<a  href="/index.php/api/v1/user/user_edit" id="top_login">个人中心</a>
+			{else/}
+			<a style="text-decoration: none;" href="#" id="top_login">欢迎您，{$Request.session.user}</a>&nbsp;|&nbsp;<a style="text-decoration: none;" href="/index.php/api/v1/index/exit_login" id="top_logon">退出</a>  &nbsp;<a  href="/index.php/api/v1/user/user_edit" id="top_login">个人中心</a>
+			{/if}
+			</span>
+    </div>
+</div>

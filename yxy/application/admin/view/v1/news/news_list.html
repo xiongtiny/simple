@@ -1,0 +1,195 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<style type="text/css">
+	.li-div-1{
+		width:260px; height: 360px; background-color: #f9f9f9; border: 1px solid #ccc; border-radius: 5px;
+	}
+	.li-a{
+		width: 260px; height: 210px;
+	}
+	.li-div-2{
+		padding:20px 0 0 20px;
+	}
+	.li-img{
+		width: 220px; height: 150px;
+	}
+	.li-div-3{
+		font-size: 16px; margin: 10px 20px 0;
+	}
+	.li-div-4{
+		margin:10px 0 0 20px;
+	}
+	.li-div-5{
+		margin:10px 0 0 20px; color: #629b58;
+	}
+
+	.page{
+		text-align: center;
+	}
+
+</style>
+ {/block}
+{block name="main"}
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">首页</a>
+							</li>
+
+							<li>
+								<a href="#">新闻管理</a>
+							</li>
+							<li class="active">新闻列表</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								新闻列表
+								<small>
+									<i class="icon-double-angle-right"></i>
+									News &amp; Dynamic Tables
+								</small>
+							</h1>
+						</div>
+
+						<div class="page-header">
+							<a href="/admin/v1/news/add"><button class="btn btn-primary">添加新闻</button></a>
+							<button class="btn btn-warning del">删除</button>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row-fluid">
+									<ul class="ace-thumbnails">
+										{foreach $news_list as $list}
+										<li>
+											<div class="li-div-1">
+												<a href="/admin/v1/news/news_content?id={$list.id}" data-rel="colorbox" class="li-a">
+													<div class="li-div-2">
+														<img alt="150x150" class="li-img" src="{$list.photo}" />
+													</div>
+													<div class="li-div-3"><b>{$list.title}</b></div>
+												</a>
+												<div class="li-div-4">类别：{$list->getType->name}</div>
+												<div class="li-div-4">2018-04-10 20:20</div>
+												<div class="li-div-5">
+													{if $list.status==0}
+													未发布
+													{else}
+													已发布
+													{/if}
+												</div>
+												<div style="text-align: right">
+														<input type="checkbox"  style="zoom:213%;margin-right: 5%"  id="" value="{$list->id}" class="del1">
+												</div>
+											</div>
+										</li>
+										{/foreach}
+
+
+									</ul>
+								</div><!-- PAGE CONTENT ENDS -->
+
+
+							</div>
+
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					<div class="page">
+						{$news_list->render()|raw}
+					</div>
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+{/block}
+
+{block name="js"} 
+	<script type="text/javascript">
+		/*jQuery(function($) {
+			var oTable1 = $('#sample-table-2').dataTable( {
+			"aoColumns": [
+		      { "bSortable": false },
+		      null, null,null, null, null,
+			  { "bSortable": false }
+			] } );
+			
+			
+			$('table th input:checkbox').on('click' , function(){
+				var that = this;
+				$(this).closest('table').find('tr > td:first-child input:checkbox')
+				.each(function(){
+					this.checked = that.checked;
+					$(this).closest('tr').toggleClass('selected');
+				});
+					
+			});
+		
+		
+			$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+			function tooltip_placement(context, source) {
+				var $source = $(source);
+				var $parent = $source.closest('table')
+				var off1 = $parent.offset();
+				var w1 = $parent.width();
+		
+				var off2 = $source.offset();
+				var w2 = $source.width();
+		
+				if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+				return 'left';
+			}
+		})
+*/
+		$(".del").click(function () {
+		    var del=new Array();
+		    $(".del1:checked").each(function () {
+				del.push($(this).val());
+            })
+			$.ajax({
+				url:"/admin/v1/news/del",
+				type:'post',
+				data:{news_id:del},
+				success:function (data) {
+					if(data.code!=200){
+					    alert(data.message);
+					    alert(1);
+					    return;
+					}
+					alert(data.message);
+					location.reload();
+                }
+
+			})
+
+        })
+	</script>	
+	
+{/block}

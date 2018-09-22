@@ -1,0 +1,116 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<style type="text/css">
+	.index_box_a_1{
+		float: left; width: 300px; height: 100px; background-color: #dce6f1;  border-radius: 10px; margin: 30px 0 0 20px;
+	}
+	.index_box_a_2{
+		font-size: 16px; font-weight: bold; color: #2c7cd2; margin:10px 0 0 20px;
+	}
+	.index_box_a_3{
+		font-size: 14px; margin: 10px 0 0 20px;
+	}
+	.index_box_a_4{
+		font-size: 30px;font-weight: bold; color: #59ab59; padding-left: 5px; padding-top: 5px;
+	}
+	.index_box_a_5{
+		font-size: 30px;font-weight: bold; color: #e43c3c; padding-left: 5px;
+	}
+	.index_box_a_6{
+		font-size: 30px;font-weight: bold; color: #989494; padding-left: 5px;
+	}
+
+	.index_box_b_1{
+		float: left; width: 250px; height: 100px; background-color: #dce6f1;  border-radius: 10px; margin: 30px 0 0 50px;
+	}
+	.index_box_c_1{
+		float: left; width: 360px; height: 100px; background-color: #dce6f1;  border-radius: 10px; margin: 30px 0 0 50px;
+	}
+	.index_box_a{
+		margin-left: 20px;
+	}
+
+
+</style>
+ {/block}
+{block name="main"}
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">首页</a>
+							</li>
+
+							<li>
+								<a href="#">数据总览</a>
+							</li>
+							<!-- <li class="active">Blank Page</li> -->
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+							<div>
+								<div class="index_box_a_1">
+									<div class="index_box_a_2"><i class="icon-user"></i> 意向学员</div>
+									<div class="index_box_a_3">
+										<span style="">新增 <span class="index_box_a_4">{$i}</span></span> 
+										<span class="index_box_a">待沟通<span class="index_box_a_5">0</span></span> 
+										<span class="index_box_a">已沟通<span class="index_box_a_6">0</span></span>
+									</div>
+								</div>
+								<div class="index_box_b_1">
+									<a href="/admin/v1/student/all_student" style="text-decoration: none">
+									<div class="index_box_a_2"><i class="icon-group"></i> 在校学员</div>
+									<div class="index_box_a_3">
+										<span style="">新增 <span class="index_box_a_4">{$j}</span></span> 
+										<span class="index_box_a">累计<span class="index_box_a_6"">{$all}</span></span>
+									</div>
+									</a>
+								</div>
+								<div class="index_box_c_1">
+									<a href="/admin/v1/order/index" style="text-decoration: none">
+									<div class="index_box_a_2"><i class="icon-yen"></i> 订单金额</div>
+									<div class="index_box_a_3">
+										<span style="">新增订单 <span class="index_box_a_4">{$k}</span></span> 
+										<span class="index_box_a">新增金额<span class="index_box_a_5">{$count_price}</span>元</span>
+										<span class="index_box_a">累计退费<span class="index_box_a_6">{$count_price_refund}</span></span>
+									</div>
+									</a>
+								</div>
+							</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+{/block}
+
+{block name="js"} 
+		
+	
+{/block}

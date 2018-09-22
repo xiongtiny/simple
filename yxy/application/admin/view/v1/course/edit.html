@@ -1,0 +1,324 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<style type="text/css">
+	input{width:100%}
+	.row span{color: #2679b5; font-weight: bold;}
+</style>
+{/block}
+{block name="main"}
+
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">主页</a>
+			</li>
+
+			<li>
+				<a href="#">课程管理</a>
+			</li>
+			<li class="active">修改课程</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+		<div class="page-header">
+			<h1>
+				新增课程
+				<small>
+					<i class="icon-double-angle-right"></i>
+					班级课
+				</small>
+			</h1>
+
+
+		</div><!-- /.page-header -->
+
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+
+				<form class="form-horizontal" role="form" id="form">
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 年级 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="grade_id">
+								{foreach $grades as $grade}
+								<option value="{$grade->id}" {if $grade->id==$course->grade_id}selected{/if}>{$grade->name}</option>
+								{/foreach}
+							</select>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 科目 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="subject_id">
+								{foreach $subjects as $subject}
+								<option value="{$subject->id}" {if $subject->id==$course->subject_id}selected{/if}>{$subject->name}</option>
+								{/foreach}
+
+							</select>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 季节 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="season_id">
+								{foreach $seasons as $season}
+								<option value="{$season->id}" {if $season->id==$course->season_id}selected{/if}>{$season->name}</option>
+								{/foreach}
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课方式 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="mode">
+								<option value="1" {if $course->mode==1}selected{/if}>线上</option>
+								<option value="2" {if $course->mode==2}selected{/if}>面授</option>
+							</select>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课类型 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="type">
+								<option value="1" selected>班级课</option>
+							</select>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 免费试听 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="free_trial">
+								<option value="1" {if $course->free_trial==1}selected{/if}>是</option>
+								<option value="0" {if $course->free_trial==0}selected{/if}>否</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程名称 </label>
+						<div class="col-sm-2">
+							<input type="text" value="{$course->name}" placeholder="课程名称"  name="name"/>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课时数 </label>
+						<div class="col-sm-2">
+							<input type="text" value="{$course->hours}" placeholder="课时数"  name="hours"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 计费形式 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="charging">
+								{foreach $charging as $c}
+								<option value="{$c->id}" {if $c->id==$course->charging}selected{/if}>{$c.name}</option>
+								{/foreach}
+							</select>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程价格 </label>
+						<div class="col-sm-2">
+							<input type="text" value="{$course->price}" placeholder="课程价格"  name="price"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程详情 </label>
+						<div class="col-sm-6">
+							<script id="course_desc" name="course_desc" type="text/plain">{$course->course_desc|raw}</script></div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程大纲 </label>
+						<div class="col-sm-6">
+							<script id="course_num" name="course_num" type="text/plain">{$course->course_num|raw}</script>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 开课时间 </label>
+						<div class="col-sm-3">
+							<input type="datetime-local" value="{$course->start_time}" name="start_time" placeholder="开课时间"  />
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 结课时间 </label>
+						<div class="col-sm-3">
+							<input type="datetime-local" value="{$course->end_time}"  name="end_time" placeholder="结课时间"  />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 上课地址 </label>
+						<div class="col-sm-2">
+							<input type="text" name="course_address" value="{$course->course_address}"   placeholder="上课地址"  />
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 班主任 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="teacher_a">
+								{foreach $headmaster as $admin}
+								<option value="{$admin.id}" {if $course.teacher_a==$admin->id}selected{/if}>{$admin.name}</option>
+								{/foreach}
+							</select>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程老师 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="teacher_b">
+								{foreach $class_teacher as $admin}
+								<option value="{$admin.id}" {if $course.teacher_b==$admin->id}selected{/if}>{$admin.name}</option>
+								{/foreach}
+							</select>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 限量人数 </label>
+						<div class="col-sm-2">
+							<input type="number" value="{$course->bady_max}" placeholder="限量人数"  name="bady_max"/><p style="color: red">0表示不限制</p>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 在学人数 </label>
+						<div class="col-sm-2">
+							<input type="number" value="{$course->study_num}" placeholder="在学人数"  name="study_num"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 优惠金额 </label>
+						<div class="col-sm-2">
+							<input type="text" placeholder="优惠金额" value="{$course->activity_price}"  name="activity_price"/>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 优惠描述 </label>
+						<div class="col-sm-2">
+							<input type="text" value="{$course->activity_desc}" placeholder="优惠描述"  name="activity_desc"/>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 适用范围 </label>
+						<div class="col-sm-2">
+							<input type="text" id="range" placeholder="适用范围" value="{$course->range}"  name="range"/>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 是否上线 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="on_line" name="on_line">
+								<option value="0"  {if $course.on_line==0}selected{/if}>否</option>
+								<option value="1" {if $course.on_line==1}selected{/if}>是</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 星级 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="start">
+								{for start="1" end="5" comparison="<="}
+								<option value="{$i}" {if $i==$course.start}{/if}>{$i}</option>
+								{/for}
+							</select>
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 推荐 </label>
+						<div class="col-sm-2">
+							<select class="form-control" id="form-field-select-1" name="recommend">
+								<option value="1" {if $course.recommend==1}selected{/if}>是</option>
+								<option value="0" {if $course.recommend==0}selected{/if}>否</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="space-4"></div>
+
+					<div class="clearfix form-actions">
+						<div class="col-md-offset-3 col-md-9">
+							<button class="btn btn-primary" type="submit">
+								<i class="icon-ok bigger-110"></i>
+								提交
+							</button>
+
+							&nbsp; &nbsp; &nbsp;
+							<!-- <button class="btn" type="reset">
+                                <i class="icon-undo bigger-110"></i>
+                                重置
+                            </button> -->
+							<a href="/admin/v1/course/index"><button class="btn" type="button">
+								<i class="icon-undo bigger-110"></i>
+								返回
+							</button></a>
+						</div>
+					</div>
+
+					<div class="hr hr-24"></div>
+
+					<input type="hidden" value="{$course.id}" name="id">
+				</form>
+
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+</div><!-- /.main-container-inner -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+	<i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+{/block}
+
+{block name="js"}
+<!-- inline scripts related to this page -->
+
+<script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+    var editor = UE.getEditor('course_desc');
+    var editor = UE.getEditor('course_num');
+</script>
+
+<script type="text/javascript">
+    $("#form").submit(function () {
+        var formData=new FormData($(this)[0]);
+        $.ajax({
+            url:'/admin/v1/course/editPost',
+            type:'post',
+            data:formData,
+            processData : false,
+            contentType : false,
+            success: function($data) {
+	            if($data.code == 200){
+	                console.log($data.status);
+	                layer.open({
+						content: $data.message,
+						btn: ['确定'],
+							yes: function(index, layero){
+								location.href='/admin/v1/course/index';
+							},
+							cancel: function(){ 
+							//右上角关闭回调
+							return false //该代码可禁止点击该按钮关闭
+							}
+					});
+	                
+	            }else{
+	            	layer.msg($data.message, {icon: 5});
+	            }
+	        }
+
+        })
+        return false;
+    })
+</script>
+
+{/block}

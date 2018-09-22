@@ -1,0 +1,160 @@
+{include file="/v2/public/foot" /}
+
+	<div class="my">
+		<div class="my_top">
+			{if(empty($user.img))}
+			<div class="my_head"> <!-- 头像 -->
+				<div class="ibox-content" style="width: 100px; height: 100px; margin:0px auto;border-radius: 100em;">
+					<div class="row" style="width: 100px; height: 100px;margin:0px auto;border-radius: 100em;">
+						<div id="crop-avatar" style="width: 100px; height: 100px;border-radius: 100em;">
+							<div class="avatar-view" style="width: 100px; height: 100px;border-radius: 100em;">
+								<img src="/phone/image/tx.jpeg" style="max-width: 100%;max-height: 100%;" alt="Logo">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{else/}	
+			<div class="my_head"> <!-- 头像 -->
+				<div class="ibox-content" style="width: 100px; height: 100px; margin:0px auto;border-radius: 100em;">
+					<div class="row" style="width: 100px; height: 100px;margin:0px auto;border-radius: 100em;">
+						<div id="crop-avatar" style="width: 100px; height: 100px;border-radius: 100em;">
+							<div class="avatar-view" style="width: 100px; height: 100px;border-radius: 100em;">
+								<img src="{$user.img}" style="max-width: 100%;max-height: 100%;" alt="Logo">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{/if}		
+			<div class="my_name">
+				{if(empty($user.name))}
+				<div class="my_name1"></div>
+				{else/}
+			<div class="my_name1">{$user.name}</div>
+			{/if}
+				<div class="my_name2">{$user.phone}</div>
+			
+			</div>
+		</div>
+
+		<div class="my_main">
+			<a href="data.html" style="color: #000000;">
+			<div class="my_main_1">
+				<div class="my_main_2">
+					<span class="icon-ico_1_1 my_ico_color1"></span>
+				</div>
+				<div>
+					<span>资料与安全</span>
+				</div>
+				
+				
+			</div>
+			</a>
+			<a href="trade.html" style="color: #000000;">
+			<div class="my_main_1">
+			<div class="my_main_2">
+				<span class="icon-ico_1_2 my_ico_color2"></span>
+			</div>
+			<div>
+				<span>交易记录</span>
+			</div>
+			
+			</div>
+			</a>
+			<a href="feedback.html" style="color: #000000;">
+			<div class="my_main_1">
+			<div class="my_main_2">
+				<span class="icon-ico_1_3 my_ico_color3"></span>
+			</div>
+			<div>
+				<span>意见反馈</span>
+			</div>
+				
+			</div>
+			</a>
+			<a href="aboutUs.html">
+			<div class="my_main_1" style="color: #000000;">
+			<div class="my_main_2">
+				<span class="icon-ico_1_4 my_ico_color4"></span>
+			</div>
+			<div>
+				<span>关于我们</span>
+			</div>
+		
+			</div>
+			</a>
+		</div>
+
+		<div class="my_button">
+		<a href="/api/v2/index/exit_login">	<button class="my_button1">退出登录</button></a>
+		</div>
+
+
+	</div>
+<div class="bottom"><!-- 底部 -->
+	<div class="bottom_1">
+	<a href="index.html" class="bottom_a">
+		<div><span class="icon-ico_5 ico_size"></span></div>
+		<div><span>首页</span></div>
+	</a>
+	</div>
+	<div class="bottom_1">
+	<a href="smartFarm.html" class="bottom_a">
+		<div><span class="icon-ico_2 ico_size"></span></div>
+		<div><span>智慧农业</span></div>
+	</a>
+	</div>
+	<div class="bottom_1">
+	<a href="myFarm1.html" class="bottom_a">
+		<div><span class="icon-ico_3 ico_size"></span></div>
+		<div><span>我的农场</span></div>
+	</a>
+	</div>
+	<div class="bottom_1">
+	<a href="my.html" class="bottom_a_active">
+		<div><span class="icon-ico_1 ico_size"></span></div>
+		<div><span>我的</span></div>
+	</a>
+	</div>
+</div>
+
+
+<div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<form class="avatar-form" action="{{url('admin/upload-logo')}}" enctype="multipart/form-data" method="post">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal" type="button">&times;</button>
+					<h4 class="modal-title" id="avatar-modal-label">头像上传</h4>
+				</div>
+				<div class="modal-body">
+					<div class="avatar-body">
+						<div class="avatar-upload">
+
+							<input style="margin-left: 0px;" class="avatar-input" id="avatarInput" name="avatar_file" type="file"></div>
+						<div class="row">
+							<div class="col-md-9" style="height: 300px;">
+								<div class="avatar-wrapper"  style="height: 300px;"></div>
+							</div>
+							<div class="col-md-3">
+								
+								<div class="avatar-preview preview-md"></div>
+								
+							</div>
+						</div>
+						<div class="row avatar-btns">
+
+						
+							<div class="col-md-3">
+								<button class="btn btn-success btn-block avatar-save" type="submit"><i class="fa fa-save"></i> 保存修改</button>
+							</div>
+						</div>
+					</div>
+				</div>
+  		</form>
+  	</div>
+  </div>
+</div>
+
+<div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>

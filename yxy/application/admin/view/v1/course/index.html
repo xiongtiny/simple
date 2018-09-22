@@ -1,0 +1,333 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+ {/block}
+{block name="main"}
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">首页</a>
+							</li>
+
+							<li>
+								<a href="#">课程管理</a>
+							</li>
+							<li class="active">班级课</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								班级课列表
+								<small>
+									<i class="icon-double-angle-right"></i>
+									Class &amp; Dynamic Tables
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+						<div class="page-header">
+							<a href="/admin/v1/course/add"><button class="btn btn-primary">新增</button></a>
+ 							<button class="btn btn-primary" id="up">批量上线</button>
+							<!--<button class="btn btn-warning">删除</button>-->
+							<button class="btn btn-warning" id="down">批量下线</button>
+							<!--<button class="btn btn-info">导出</button>-->
+						</div>
+						<div class="page-header">
+					        <form action="">
+					            <div class="form-group" style="display: inline">
+					                <label for="" class="control-label" style="display: inline">年级：</label>
+					                <div style="display: inline">
+					                    <select name="grade_id">
+					                    	<option value="">不限</option>
+					                         {foreach $grade_data as $grade_data}
+                                				<option value="{$grade_data.id}">{$grade_data.name}</option>
+                                			{/foreach}
+					                    </select>
+					                </div>
+					            </div>
+					            <div class="form-group" style="display: inline">
+					                <label for="" class="control-label" style="display: inline">科目</label>
+					                <div style="display: inline">
+					                    <select name="subject_id">
+					                    	<option value="">不限</option>
+					                         {foreach $subject_data as $type}
+                                				<option value="{$type.id}">{$type.name}</option>
+                                			{/foreach}
+					                    </select>
+					                </div>
+					            </div>
+					            <div class="form-group" style="display: inline">
+					                <label for="" class="control-label" style="display: inline">授课方式：</label>
+					                <div style="display: inline">
+					                    <select name="type" id="">
+					                        <option value="">不限</option>
+					                        <option value="0">线上</option>
+					                        <option value="1">面授</option>
+					                    </select>
+					                </div>
+					            </div>
+					              <div class="form-group" style="display: inline">
+					                <label for="" class="control-label" style="display: inline">上课老师：</label>
+					                <div style="display: inline">
+					                    <select name="teacher_b" id="">
+					                    	<option value="">不限</option>
+					                       {foreach $consolution as $type}
+                                				<option value="{$type.id}">{$type.name}</option>
+                                			{/foreach}
+					                    </select>
+					                </div>
+					            </div>
+					             <div class="form-group" style="display: inline">
+					                <label for="" class="control-label" style="display: inline">班主任：</label>
+					                <div style="display: inline">
+					                    <select name="teacher_a" id="">
+					                    	<option value="">不限</option>
+					                       {foreach $headmaster as $type}
+                                				<option value="{$type.id}">{$type.name}</option>
+                                			{/foreach}
+					                    </select>
+					                </div>
+					            </div>
+					            <button class="btn btn-primary" style="display: inline-block">确定</button>
+					        </form>
+           				</div>
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="table-responsive">
+											<table id="sample-table-1" class="table table-bordered table-hover">
+												<thead>
+													<tr>
+														<th class="center">
+															<label>
+																<input type="checkbox" class="ace c"/>
+																<span class="lbl"></span>
+															</label>
+														</th>
+														<th>ID</th>
+														<th>名称</th>
+														<th>状态</th>
+														<th>年级</th>
+														<th>科目</th>
+														<th>授课类型</th>
+														<th>授课方式</th>
+														<th>上课时间</th>
+														<th>价格</th>
+														<th>学生人生</th>
+														<th>老师</th>
+														<th>班主任</th>
+														<th>操作</th>
+													</tr>
+												</thead>
+
+												<tbody>
+												{foreach $courses as $course}
+													<tr style="background-color:{if $course->on_line==0}#A9A9A9{else/}#fffff{/if} !important;">
+														<td class="center">
+															<label>
+																<input type="checkbox" class="ace" value="{$course.id}"/>
+																<span class="lbl"></span>
+															</label>
+														</td>
+
+														<td>{$course->id}
+														</td>
+														<td>{$course->name}</td>
+														<td>
+															{if $course->on_line==0}
+															<spam style="color: #eea236">已下线</spam>
+															{else/}
+															<spam style="color: green">上线中</spam>
+															{/if}
+														</td>
+														<td>{$course->grade->name}</td>
+														<td>{$course->subject->name}</td>
+														<td>
+															{if $course->type==1}
+															班级课
+															{/if}
+														</td>
+														<td>
+															{if $course->mode==1}
+															线上直播
+															{else/}
+															面授
+															{/if}
+														</td>
+														<td>{$course->start_time}</td>
+														<td>{$course->price}</td>
+														<td><a href="/admin/v1/course/course_student/id/{$course.id}" style="text-decoration: none;text-decoration-color:#000000 !important;">{$course->study_num}</a></td>
+														<td>{$course->teacherIndex->name}</td>
+														<td>{$course->teacherTop->name}</td>														<td>
+															<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+																<a href="/admin/v1/course/edit/id/{$course.id}"><button class="btn btn-xs btn-info">
+																	<i class="icon-edit bigger-120"></i>
+																</button></a>
+
+																<a href="/admin/v1/_course/del"><button class="btn btn-xs btn-danger">
+																	<i class="icon-trash bigger-120"></i>
+																</button></a>
+
+															</div>
+
+														</td>
+													</tr>
+												{/foreach}
+												</tbody>
+											</table>
+										</div><!-- /.table-responsive -->
+									</div><!-- /span -->
+								</div><!-- /row -->
+
+								
+								<div class="hr hr-18 dotted hr-double"></div>
+									
+								</div>
+
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+{/block}
+
+{block name="js"} 
+	<script type="text/javascript">
+		jQuery(function($) {
+			var oTable1 = $('#sample-table-2').dataTable( {
+			"aoColumns": [
+		      { "bSortable": false },
+		      null, null,null, null, null,
+			  { "bSortable": false }
+			] } );
+			
+			
+			$('table th input:checkbox').on('click' , function(){
+				var that = this;
+				$(this).closest('table').find('tr > td:first-child input:checkbox')
+				.each(function(){
+					this.checked = that.checked;
+					$(this).closest('tr').toggleClass('selected');
+				});
+					
+			});
+		
+		
+			$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+			function tooltip_placement(context, source) {
+				var $source = $(source);
+				var $parent = $source.closest('table')
+				var off1 = $parent.offset();
+				var w1 = $parent.width();
+		
+				var off2 = $source.offset();
+				var w2 = $source.width();
+		
+				if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+				return 'left';
+			}
+		})
+	</script>
+
+
+<script type="text/javascript">
+	$(".c").click(function () {
+		$("input[type=checkbox]").each(function (index,val) {
+		    if($($("input[type=checkbox]")[0]).is(":checked")){
+		        $(val).prop('checked','checked');
+			}else{
+		        if(index!=0){
+                    $(val).removeAttr('checked');
+                }
+			}
+        })
+    })
+
+	$("#up").click(function () {
+	    var checked_id=new Array();
+		$(".ace").each(function (index,value) {
+		    if(typeof($(this).attr('value'))!='undefined'){
+                if($(this).is(":checked")){
+                    checked_id.push($(this).attr('value'));
+                }
+			}
+        })
+
+        $.ajax({
+            url:'/admin/v1/course/up',
+            type:'post',
+            data:{id:checked_id},
+            success:function (data) {
+               if(data.code!=200){
+                   layer.msg(data.message, {icon: 2});
+                   return;
+			   }
+
+			   layer.msg(data.message, {icon: 1});
+               location.reload();
+            }
+        })
+
+    })
+
+
+    $("#down").click(function () {
+        var checked_id=new Array();
+        $(".ace").each(function (index,value) {
+            if(typeof($(this).attr('value'))!='undefined'){
+                if($(this).is(":checked")){
+                    checked_id.push($(this).attr('value'));
+                }
+            }
+        })
+
+        $.ajax({
+            url:'/admin/v1/course/down',
+            type:'post',
+            data:{id:checked_id},
+            success:function (data) {
+                if(data.code!=200){
+                    layer.msg(data.message, {icon: 2});
+                    return;
+                }
+
+                layer.msg(data.message, {icon: 1});
+                location.reload();
+            }
+        })
+
+    })
+
+
+</script>
+
+{/block}

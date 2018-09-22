@@ -1,0 +1,239 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+{/block}
+{block name="main"}
+
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="#">主页</a>
+            </li>
+
+            <li>
+                <a href="#">课程管理</a>
+            </li>
+            <li class="active">1v1修改课程</li>
+        </ul><!-- .breadcrumb -->
+
+        <div class="nav-search" id="nav-search">
+            <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+            </form>
+        </div><!-- #nav-search -->
+    </div>
+
+    <div class="page-content">
+        <div class="page-header">
+            <h1>
+                修改课程
+                <small>
+                    <i class="icon-double-angle-right"></i>
+                    1V1课程
+                </small>
+            </h1>
+
+
+        </div><!-- /.page-header -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+
+                <form class="form-horizontal" role="form" id="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 年级 </label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="form-field-select-1" name="grade_id">
+                                {foreach $grades as $grade}
+                                <option value="{$grade->id}" {if $grade->id==$course->grade_id}selected{/if}>{$grade->name}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 授课方式 </label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="form-field-select-1" name="mode">
+                                <option value="1" {if $course->mode==1}selected{/if}>线上</option>
+                                <option value="2" {if $course->mode==2}selected{/if}>面授</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 课程名称 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="form-field-1" value="{$course->name}" placeholder="课程名称" class="col-xs-10 col-sm-5" name="name"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 课时数 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="form-field-1" value="{$course->hours}" placeholder="课时数" class="col-xs-10 col-sm-5" name="hours"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 计费形式 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="form-field-1"  placeholder="按课程打包计费" class="col-xs-10 col-sm-5"  disabled/>
+                            <!-- <select class="form-control" id="form-field-select-1" name="charging">
+                                {foreach $charging as $c}
+                                <option value="{$c->id}" {if $c->id==$course->charging}selected{/if}>{$c.name}</option>
+                                {/foreach}
+                            </select> -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 课程价格 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="form-field-1" value="{$course->price}" placeholder="课程价格" class="col-xs-10 col-sm-5" name="price"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 优惠金额 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="form-field-1" placeholder="优惠金额" value="{$course->activity_price}" class="col-xs-10 col-sm-5" name="activity_price"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 优惠描述 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="form-field-1" value="{$course->activity_desc}" placeholder="优惠描述" class="col-xs-10 col-sm-5" name="activity_desc"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="range"> 适用范围 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="range" placeholder="适用范围" value="{$course->range}" class="col-xs-10 col-sm-5" name="range"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="on_line"> 是否上线 </label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="on_line" name="on_line">
+                                <option value="0" {if $course.on_line==0}selected{/if}>否</option>
+                                <option value="1" {if $course.on_line==1}selected{/if}>是</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 推荐 </label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="form-field-select-1" name="recommend">
+                                <option value="1" {if $course.recommend==1}selected{/if}>是</option>
+                                <option value="0" {if $course.recommend==0}selected{/if}>否</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-4"></div>
+
+                    <div class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="icon-ok bigger-110"></i>
+                                提交
+                            </button>
+
+                            &nbsp; &nbsp; &nbsp;
+                            <!-- <button class="btn" type="reset">
+                                <i class="icon-undo bigger-110"></i>
+                                重置
+                            </button> -->
+                            <a href="/admin/v1/hours/index"><button class="btn" type="button">
+                                <i class="icon-undo bigger-110"></i>
+                                返回
+                            </button></a>
+                        </div>
+                    </div>
+
+                    <div class="hr hr-24"></div>
+
+                    <input type="hidden" value="{$course.id}" name="id">
+                </form>
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div><!-- /.main-content -->
+</div><!-- /.main-container-inner -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+{/block}
+
+{block name="js"}
+<!-- inline scripts related to this page -->
+
+
+<script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+    var editor = UE.getEditor('course_desc');
+    var editor = UE.getEditor('course_num');
+</script>
+
+<script type="text/javascript">
+    $("#form").submit(function () {
+        var formData=new FormData($(this)[0]);
+        $.ajax({
+            url:'/admin/v1/hours/editPost',
+            type:'post',
+            data:formData,
+            processData : false,
+            contentType : false,
+            success: function($data) {
+                if($data.code == 200){
+                    console.log($data.status);
+                    layer.open({
+                        content: $data.message,
+                        btn: ['确定'],
+                            yes: function(index, layero){
+                                location.href='/admin/v1/hours/index';
+                            },
+                            cancel: function(){ 
+                            //右上角关闭回调
+                            return false //该代码可禁止点击该按钮关闭
+                            }
+                    });
+                    
+                }else{
+                    layer.msg($data.message, {icon: 5});
+                }
+            }
+
+        })
+        return false;
+    })
+</script>
+
+{/block}

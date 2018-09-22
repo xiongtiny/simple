@@ -1,0 +1,179 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+{/block}
+{block name="main"}
+
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="#">首页</a>
+            </li>
+
+            <li>
+                <a href="#">客服中心</a>
+            </li>
+            <li class="active">意见反馈</li>
+        </ul><!-- .breadcrumb -->
+
+    </div>
+
+    <div class="page-content">
+        	<!--<div class="page-header">-->
+                <!--<h1>-->
+                    <!--班级课列表-->
+                    <!--<small>-->
+                        <!--<i class="icon-double-angle-right"></i>-->
+                        <!--Static &amp; Dynamic Tables-->
+                    <!--</small>-->
+                <!--</h1>-->
+            <!--</div>&lt;!&ndash; /.page-header &ndash;&gt;-->
+            <div class="page-header">
+                <form action="">
+                    <div class="form-group" style="display: inline">
+                        <label for="" class="control-label" style="display: inline">分类:</label>
+                        <div style="display: inline">
+                            <select name="type_id">
+                                <option value="">不限制</option>
+                                {foreach $types as $type}
+                                <option value="{$type.id}">{$type.name}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: inline">
+                        <label for="" class="control-label" style="display: inline">沟通</label>
+                        <div style="display: inline">
+                            <select name="is_read" id="">
+                                <option value="">不限</option>
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="display: inline-block">确定</button>
+                </form>
+            </div>
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table id="sample-table-1" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--金额、支付时间、支付方式、支付状态-->
+                                    <th>ID</th>
+                                    <th>分类</th>
+                                    <th>姓名</th>
+                                    <th>电话</th>
+                                    <th>内容</th>
+                                    <th>提交时间</th>
+                                    <th>沟通</th>
+                                    <th>查看详情</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {foreach $evaluates as $list}
+                                <tr>
+
+                                    <td>{$list->id}</td>
+                                    <td></td>
+                                    {if $list->getUser}
+                                    <td><a href="show/id/{$list->id}">{$list->getUser->username}</a></td>
+                                    <td>{$list->getUser->phone}</td>
+                                    {else/}
+                                    <td>无</td>
+                                    <td>无</td>
+                                    {/if}
+                                    <td>{$list->content}</td>
+                                    <td>{$list->create_time}</td>
+                                    <td>
+                                        {if $list->is_read==0}
+                                        <span style="color: red">否</span>
+                                        {else/}
+                                        <span style="color: green">是</span>
+                                        {/if}
+                                    </td>
+                                    <td><a href="show/id/{$list->id}">查看详情</a></td>
+                                </tr>
+                                {/foreach}
+                                </tbody>
+                            </table>
+                        </div><!-- /.table-responsive -->
+                    </div><!-- /span -->
+                </div><!-- /row -->
+
+
+                <div class="hr hr-18 dotted hr-double"></div>
+
+            </div>
+
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    <div class="text-center">
+        {$evaluates->render()|raw}
+    </div>
+</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+
+</div><!-- /.main-container-inner -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
+</div><!-- /.main-container -->
+{/block}
+
+{block name="js"}
+<script type="text/javascript">
+    jQuery(function($) {
+        var oTable1 = $('#sample-table-2').dataTable( {
+            "aoColumns": [
+                { "bSortable": false },
+                null, null,null, null, null,
+                { "bSortable": false }
+            ] } );
+
+
+        $('table th input:checkbox').on('click' , function(){
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    this.checked = that.checked;
+                    $(this).closest('tr').toggleClass('selected');
+                });
+
+        });
+
+
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+            var $source = $(source);
+            var $parent = $source.closest('table')
+            var off1 = $parent.offset();
+            var w1 = $parent.width();
+
+            var off2 = $source.offset();
+            var w2 = $source.width();
+
+            if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+            return 'left';
+        }
+    })
+</script>
+
+{/block}

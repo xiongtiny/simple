@@ -1,0 +1,143 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+{/block}
+{block name="main"}
+
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="#">首页</a>
+            </li>
+
+            <li>
+                <a href="/admin/v1/evaluate/index">意见反馈</a>
+            </li>
+            <li class="active">意见反馈</li>
+        </ul><!-- .breadcrumb -->
+
+    </div>
+
+    <div class="page-content">
+        <!--<div class="page-header">-->
+        <!--<h1>-->
+        <!--班级课列表-->
+        <!--<small>-->
+        <!--<i class="icon-double-angle-right"></i>-->
+        <!--Static &amp; Dynamic Tables-->
+        <!--</small>-->
+        <!--</h1>-->
+        <!--</div>&lt;!&ndash; /.page-header &ndash;&gt;-->
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+
+                <div class="row" style="float: left">
+                    <div class="col-xs-12 text-center" tyle="margin-top: 3%">
+                        {$evaluate.content}
+                    </div><!-- /span -->
+
+                </div><!-- /row -->
+
+                <div class="col-xs-12 text-center" style="margin-top: 3%">
+                    {foreach $evaluate.picture as $pic}
+                    <img src="{$pic}" alt="" style="float: left">
+                    {/foreach}
+                </div>
+
+                <div class="col-xs-12 ext-center" style="margin-top: 3%">
+                    <form action="" id="form">
+                        <input type="hidden" value="{$evaluate.id}" name="id">
+                        <button class="btn btn-primary" id="check">确定沟通</button>
+                        <a href="/admin/v1/evaluate/index">
+                            <button class="btn" type="button">
+                                <i class="icon-undo bigger-110"></i>返回
+                            </button>
+                        </a>
+                    </form>
+                </div>
+                <div class="hr hr-18 dotted hr-double"></div>
+
+            </div>
+
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+
+</div><!-- /.main-container-inner -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
+</div><!-- /.main-container -->
+{/block}
+
+{block name="js"}
+<script type="text/javascript">
+    jQuery(function($) {
+        var oTable1 = $('#sample-table-2').dataTable( {
+            "aoColumns": [
+                { "bSortable": false },
+                null, null,null, null, null,
+                { "bSortable": false }
+            ] } );
+
+
+        $('table th input:checkbox').on('click' , function(){
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    this.checked = that.checked;
+                    $(this).closest('tr').toggleClass('selected');
+                });
+
+        });
+
+
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+            var $source = $(source);
+            var $parent = $source.closest('table')
+            var off1 = $parent.offset();
+            var w1 = $parent.width();
+
+            var off2 = $source.offset();
+            var w2 = $source.width();
+
+            if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+            return 'left';
+        }
+    })
+
+    $("#form").submit(function () {
+        $.ajax({
+            url:"/admin/v1/evaluate/read",
+            type:'post',
+            data:$("#form").serialize(),
+            success:function(data) {
+                if(data.code!=200){
+                    alert(data.message);
+                    return;
+                }
+                alert(data.message);
+                location.href="/admin/v1/evaluate/index/";
+
+
+            }
+        });
+        return false;
+    })
+</script>
+
+{/block}

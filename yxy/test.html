@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    $.ajax({
+        url:"http://yxy.weilang.top/api/v1/custom/getEvaluate",
+        type:'get',
+        headers:{'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsYXQiOjE1MjU5MzMyMzcsImV4cCI6MTUyNjAwNTIzNywianRpIjoxNTI1OTMzMjM4LCJ1c2VyTW9kZWwiOnsiaWQiOjksInVzZXJuYW1lIjoiaGVsbG8iLCJudW1iZXIiOjE4MDQyNDAwMDAxLCJwaG9uZSI6IjE4MDY0MTA5MjE4IiwiZ3JhZGUiOjIsInN1YmplY3QiOjIsInR5cGUiOjAsInRlYWNoZXIiOjAsInNleCI6MCwiaW1nIjoiaHR0cDpcL1wveXh5LndlaWxhbmcudG9wXC91cGxvYWRzXC8yMDE4MDQyOFwvNDFmNTkxN2UwZTBmNTdkNjAwNWRjMDA2OTE4MmRhMjQuanBnIiwibGFzdF9sb2dpbl9pcCI6IjU4LjQ5Ljc1LjE5NCIsImxhc3RfbG9naW5fdGltZSI6IjIwMTgtMDUtMTAgMTQ6MjA6MzgiLCJjcmVhdGVfdGltZSI6IjIwMTgtMDQtMjEgMjE6NDE6MDciLCJ1cGRhdGVfdGltZSI6IjIwMTgtMDUtMDMgMjA6NDU6NTEifX0.mh64jTSJBSWnaYGW0cG9w2mEE3XAUJulz-Ybos8lc60'},
+        success:function (data) {
+            console.log(data)
+        }
+    })
+</script>

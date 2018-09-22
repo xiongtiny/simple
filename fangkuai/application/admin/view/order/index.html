@@ -1,0 +1,75 @@
+{include file="public/head"/}
+<!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">用户列表</div>
+
+
+                            </div>
+                                              <div class="widget-body  am-fr">
+
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">     
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                    <div class="am-form-group tpl-table-list-select"> 
+                                        <a href="/ami/order/index">  <div class="am-btn-group-xs " style="padding-top: 0.2em;"> 
+                                    <button class="am-btn am-btn-primary"  /> 清除</button> 
+                                    </div>
+                                </div></a>   
+                                  </div>
+                                      
+                                    
+                            <form  method="post" action="/ami/order/index">
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                    <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+
+                                        <input name="order_number" type="text" class="am-form-field" placeholder="输入订单号" >
+                                        <span class="am-input-group-btn">
+                                <input type='submit' class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" value="搜索" ></span>
+                                    </div>
+                                </div>
+                            </form>
+                                </div>
+
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>用户姓名</th>
+                                                <th>订单号</th>
+                                                <th>农场名称</th>
+                                                <th>订单状态</th>
+                                                <th>价格</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {foreach name='data' item='vo'}
+                                            <tr class="gradeX">
+                                                <td>{$user->find($vo.user_id)->name}</td>
+                                                <td>{$vo.order_number}</td>
+                                                <td>{$farm->find($vo.farm_id)->name}</td>
+                                                <td>{$vo.type}</td>   
+                                                <td>{$vo.price}元</td>                      
+                                            </tr>  
+                                            {/foreach}                                          
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                    {$data|raw}
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

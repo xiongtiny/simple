@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="UTF-8">
+	<title>个人中心</title>
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link href="https://cdn.bootcss.com/cropper/3.1.3/cropper.min.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+   <!--  <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.js"></script> -->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/cropper/3.1.3/cropper.min.js"></script>
+	<style type="text/css">
+
+    #photo {
+        max-width:100%;
+        max-height:350px;
+    }
+    .img-preview-box {
+        text-align: center;
+    }
+    .img-preview-box > div {
+        display: inline-block;;
+        margin-right: 10px;
+    }
+    .img-preview {
+        overflow: hidden;
+    }
+    .img-preview-box .img-preview-lg {
+        width: 150px;
+        height: 150px;
+    }
+    .img-preview-box .img-preview-md {
+        width: 100px;
+        height: 100px;
+    }
+    .img-preview-box .img-preview-sm {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+</style>
+</head>
+<body>
+<body>
+{include file="/v1/public/head"/}
+
+	<div id="navigation_1"><!-- 导航 -->
+		<div class="container">
+			<div id="navigation_left">
+				<a style="text-decoration: none;" href="/index.php/api/v1/index/index"><img src="/static/image/logo.png" alt=""></a>
+			</div>
+			<div id="navigation_right">
+				<div class="navigation_1 bottom_6_1">
+					<a style="text-decoration: none;" class="navigation_3" href="/index.php/api/v1/index/index"><div class="navigation_2">首页</div></a>
+					<a style="text-decoration: none;" class="navigation_3" href="/index.php/api/v1/farm/index"><div class="navigation_2 ">智慧农业</div></a>
+					<a style="text-decoration: none;" class="navigation_3" href="/index.php/api/v1/other/other_product_description"><div class="navigation_2">产品教程</div></a>
+					<a style="text-decoration: none;" class="navigation_3" href=""><div class="navigation_2">论坛</div></a>
+					<a style="text-decoration: none;" class="navigation_3" href="/index.php/api/v1/other/other_about_us"><div class="navigation_2">关于我们</div></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	<div class="bottom_6 bottom_6_1">
+		<div class="container  bottom_6_1">
+
+			<div style="width: 25%;"> <!-- 右侧 -->
+				<div class="guide_8_uesr">
+
+                <div data-target="#changeModal" data-toggle="modal" class="user-photo-box" style="width: 100px; height: 100px; margin:0px auto;border-radius: 100em;">
+                    <img id="user-photo" src="{$user.img}" style="width: 100px; height: 100px; margin:0px auto;border-radius: 100em;">
+                </div>
+                    <div>
+                        {if(empty($user.name))}
+                        <h3></h3>
+                        {else}
+                        <h3>{$user.name}</h3>
+                        {/if}
+                        <span>{$user.phone}</span>
+                    </div>
+
+				</div>
+				<div style="padding-bottom: 100px;font-size: 16px;">
+					<div class="guide_8">
+						<a style="text-decoration: none;" href="/index.php/api/v1/user/user_edit"><div class="guide_8_1">资料与安全</div></a>
+					</div>
+					<div class="guide_8">
+						<a style="text-decoration: none;" href="/index.php/api/v1/user/user_lease"><div class="guide_8_1 guide_8_1_active">我租赁的农场</div></a>
+					</div>
+					<div class="guide_8">
+						<a style="text-decoration: none;" href="/index.php/api/v1/user/user_release"><div class="guide_8_1">我发布的农场</div></a>
+					</div>
+					<div class="guide_8">
+						<a style="text-decoration: none;" href="/index.php/api/v1/user/transaction_record"><div class="guide_8_1">交易记录</div></a>
+					</div>
+					<div class="guide_8">
+						<a style="text-decoration: none;" href="/index.php/api/v1/user/feedback"><div class="guide_8_1">意见反馈</div></a>
+					</div>
+				</div>
+			</div>
+
+			<div class="user_2"><!-- 左侧 -->
+					<div class="bottom_6_1">
+                    <div style="width: 780px;">
+                    {foreach name="data"  item="vo"}
+                    {if $vo.type == 1}
+                        <div class="my_farm" style="width:240px; float: left;height: 219px;" >
+                        <a style="text-decoration: none;" href="/index.php/api/v1/farm/farm_detail">
+                            <img src="{$vo.getFarm['img']}" alt="" style="width: 240px;height: 153px;">
+                            <div class="my_farm_text  small-font smallsize-font">
+                                {$vo.getFarm['name']}<br>
+                                <span class="my_lease">
+                                        <img src="/static/image/ico_9.png" alt="">&nbsp;{$vo.getFarm['province']}{$vo.getFarm['city']}{$vo.getFarm['area']}{$vo.getFarm['address']}
+                                </span><br>
+                                <span class="my_lease_1">租赁时间：{$vo.create_time|strtotime|date="Y-m-d"}&nbsp;至&nbsp;{$vo.downline_time|strtotime|date="Y-m-d"}</span>    
+                            </div>
+                        </a>
+                        </div>
+                    {else/}
+                           <div class="my_farm" style="width: 240px;float: left;height: 219px;">
+                            <img src="{$vo.getFarm['img']}" alt="" style="width: 240px;height: 153px;" >
+                               <div class="overdue_ico"><img src="/static/image/overdue.png" style="width: 240px;height: 153px;" pstyle="width: 240px;height: 153px;" alt=""></div>
+                            <div class="my_farm_text  small-font smallsize-font" >
+                                {$vo.getFarm['name']}  <br>
+                                <span class="my_lease">
+                                        <img src="/static/image/ico_9.png" alt="">&nbsp;&nbsp;{$vo.getFarm['province']}{$vo.getFarm['city']}{$vo.getFarm['area']}{$vo.getFarm['address']}
+                                </span><br>
+                                <span class="my_lease_1">租赁时间：&nbsp;{$vo.create_time|strtotime|date="Y-m-d"}至&nbsp;{$vo.downline_time|strtotime|date="Y-m-d"}</span>
+                                    <button  style="border: 0px;background-color: #ffffff;text-decoration: none;color: #e00000;margin-left: 6px;" onclick="del()">删除 </button>
+                                    <input type="text" style="display: none;" id="order_id" value="{$vo.id}">
+                                    </div>
+                            </div>
+                    {/if}
+                    {/foreach}
+
+
+                    </div>
+
+                    </div>
+					
+
+				</div>
+
+            {$data|raw}
+			</div>
+		</div>
+	</div>
+
+
+{include file="/v1/public/foot"/}
+
+
+<div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+
+<script>
+function del()
+{
+          $.ajax({ 
+            type: "post",   
+            url: "/index.php/api/v1/user/del_expire",
+            data: {
+                order_id:$("#order_id").val(),
+            },
+            success: function(data) {
+                if(data.code==400){
+                    swal(data.message);
+                }
+                if(data.code==200){
+                    console.log(data);
+                    swal(data.message);
+                    window.location.href='/index.php/api/v1/user/user_lease';
+                    
+                }
+            },
+            error: function(jqXHR){     
+               alert("发生错误：" + jqXHR.status);  
+            },     
+        });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<style type="text/css">
+	input{width:100%}
+	.row span{color: #2679b5; font-weight: bold;}
+</style>
+ {/block}
+{block name="main"}
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="#">课程管理</a>
+							</li>
+							<li class="active">新增课程</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								新增课程
+								<small>
+									<i class="icon-double-angle-right"></i>
+									班级课
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form class="form-horizontal" role="form" id="form">
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 年级 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+										<select class="form-control" id="form-field-select-1" name="grade_id">
+											{foreach $grades as $grade}
+											<option value="{$grade->id}">{$grade->name}</option>
+											{/foreach}
+										</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 科目 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+										<select class="form-control" id="form-field-select-1" name="subject_id">
+											{foreach $subjects as $subject}
+											<option value="{$subject->id}">{$subject->name}</option>
+											{/foreach}
+										</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 季节 </label>
+										<div class="col-sm-2">
+										<select class="form-control" id="form-field-select-1" name="season_id">
+											{foreach $seasons as $season}
+											<option value="{$season->id}">{$season->name}</option>
+											{/foreach}
+										</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课方式 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+										<select class="form-control" id="form-field-select-1" name="mode">
+											<option value="1">线上</option>
+											<option value="2">面授</option>
+										</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课类型 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+										<select class="form-control" id="form-field-select-1" name="type" disabled>
+											<option value="1" selected>班级课</option>
+										</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 免费试听 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+										<select class="form-control" id="form-field-select-1" name="free_trial">
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+										</div>
+									</div>
+
+									
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程名称 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="课程名称" name="name"/>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课时数 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="课时数" name="hours"/>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 计费形式 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+										<select class="form-control" id="form-field-select-1" name="charging">
+											{foreach $charging as $c}
+											<option value="{$c->id}">{$c.name}</option>
+											{/foreach}
+										</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程价格 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="课程价格" name="price"/>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程详情 <span style="color: red">*</span></label></label>
+										<div class="col-sm-6">
+											<script id="course_desc" name="course_desc" type="text/plain"></script></div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程大纲 <span style="color: red">*</span></label></label>
+										<div class="col-sm-6">
+											<script id="course_num" name="course_num" type="text/plain"></script>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 开课时间 <span style="color: red">*</span></label></label>
+										<div class="col-sm-3">
+											<input type="datetime-local" name="start_time" placeholder="开课时间" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 结课时间 </label>
+										<div class="col-sm-3">
+											<input type="datetime-local" name="end_time" placeholder="结课时间" />
+										</div>
+										
+									</div>
+									
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 上课地址 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+											<input type="text" name="course_address"  placeholder="上课地址" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 班主任 </label>
+										<div class="col-sm-2">
+											<select class="form-control" id="form-field-select-1" name="teacher_a">
+												{foreach $headmaster as $admin}
+												<option value="{$admin.id}">{$admin.name}</option>
+												{/foreach}
+											</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程老师 </label>
+										<div class="col-sm-2">
+											<select class="form-control" id="form-field-select-1" name="teacher_b">
+												{foreach $class_teacher as $admin}
+												<option value="{$admin.id}">{$admin.name}</option>
+												{/foreach}
+											</select>
+										</div>
+										
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 限量人数 </label>
+										<div class="col-sm-2">
+											<input type="number" placeholder="限量人数" name="bady_max"/><p style="color: red">0表示不限制</p>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 在学人数 </label>
+										<div class="col-sm-2">
+											<input type="number" placeholder="在学人数" name="study_num"/>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 优惠金额 </label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="优惠金额" name="activity_price"/>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 优惠描述 </label>
+										<div class="col-sm-2">
+											<textarea name="activity_desc" style="width:100%;" placeholder="优惠描述"></textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 适用范围 </label>
+										<div class="col-sm-2">
+											<input type="text" id="range" placeholder="适用范围" name="range"/>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 是否上线 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+											<select class="form-control" id="on_line" name="on_line">
+												<option value="0">否</option>
+												<option value="1">是</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 星级 </label>
+										<div class="col-sm-2">
+										<select class="form-control" id="form-field-select-1" name="start">
+											<option value="5">5</option>
+											<option value="4">4</option>
+											<option value="3">3</option>
+											<option value="2">2</option>
+											<option value="1">1</option>
+										</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 推荐 <span style="color: red">*</span></label></label>
+										<div class="col-sm-2">
+										<select class="form-control" id="form-field-select-1" name="recommend">
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-primary" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<!-- <button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												重置
+											</button> -->
+											<a href="/admin/v1/course/index"><button class="btn" type="button">
+												<i class="icon-undo bigger-110"></i>
+												返回
+											</button></a>
+										</div>
+									</div>
+
+									<div class="hr hr-24"></div>	
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+{/block}
+
+{block name="js"} 
+		<!-- inline scripts related to this page -->
+
+<script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+    var editor = UE.getEditor('course_desc');
+    var editor = UE.getEditor('course_num');
+</script>
+
+<script type="text/javascript">
+	$("#form").submit(function () {
+	    var formData=new FormData($(this)[0]);
+	    $.ajax({
+			url:'/admin/v1/course/addPost',
+			type:'post',
+			data:formData,
+            processData : false,
+            contentType : false,
+			success:function (data) {
+				if(data.code!=200){
+                    layer.alert(data.message);
+				    return;
+				}
+				layer.alert(data.message);
+				location.href='/admin/v1/course/index';
+            }
+
+		})
+		return false;
+    })
+</script>
+	
+{/block}

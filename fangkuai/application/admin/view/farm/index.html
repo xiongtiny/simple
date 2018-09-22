@@ -1,0 +1,76 @@
+{include file="public/head"/}
+<!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">用户列表</div>
+
+
+                            </div>
+                            <div class="widget-body  am-fr">
+
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">     
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                    <div class="am-form-group tpl-table-list-select">   
+                                    </div>
+                                </div>
+
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                    <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                        <!-- <input type="text" class="am-form-field ">
+                                        <span class="am-input-group-btn">
+                                                                        <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>          </span> -->
+                                    </div>
+                                </div>
+
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>农场名称</th>
+                                                <th>电话</th>
+                                                <th>地区</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {foreach name='data' item='vo'}
+                                            <tr class="gradeX">
+                                                <td>{$vo.name}</td>
+                                                <td>{$vo.phone}</td>
+                                                <td>{$vo.province}{$vo.city}</td>
+                                                <td> {$vo.type}</td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="/ami/farm/farm_details?id={$vo.id}">
+                                                             详情
+                                                        </a>         
+                                                        <a href="/ami/farm/farm_del?id={$vo.id}" class="tpl-table-black-operation-del">
+                                                             删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>  
+                                            {/foreach}                                          
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                    {$data|raw}
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,189 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<style type="text/css">
+	input{width:100%}
+	.row span{color: #2679b5; font-weight: bold;}
+</style>
+ {/block}
+{block name="main"}
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="#">订单管理</a>
+							</li>
+							<li class="active">修改订单</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								修改订单
+								<small>
+									<i class="icon-double-angle-right"></i>
+									Edit Order
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form class="form-horizontal" action="/admin/v1/order/edit_order" method="post" role="form" id="form">
+									<input type="hidden" name="id" value="{$data_get['id']}"/>
+									<div class="hr-24"></div>
+									<span>用户信息</span>
+									<span style="padding-left: 40px;">姓名：{$data_get['user_name']}</span>
+									<span style="padding-left: 20px;">ID：{$user_data['number']}</span>
+									<div class="hr"></div>
+<!-- 									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> ID </label>
+										<div class="col-sm-2">
+											<input type="text" name="id" value="{$data_get['id']}" placeholder="自动生成ID"  disabled />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 姓名 </label>
+										<div class="col-sm-2">
+											<input type="text" value="{$data_get['user_name']}"  placeholder="姓名" disabled/>
+										</div>
+									</div> -->
+									<input type="hidden" name="price_old" value="{$data_get['price']}">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 订单当前金额 </label>
+										<div class="col-sm-2">
+											<input type="number" value="{$data_get['price']}" disabled />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 已经优惠金额 </label>
+										<div class="col-sm-2">
+											<input type="number" value="{$data_get['activity_price']}" disabled />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 特别优惠 </label>
+										<div class="col-sm-2">
+											<input type="number" name="reduce_price" placeholder="输入特别优惠金额" style="border:1px solid #4b89aa" />
+										</div>
+										<span style="color: red"> * </span>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 优惠说明 </label>
+										<div class="col-sm-3">
+											<textarea name="reduce_explain" style="width:100%;border:1px solid #4b89aa" placeholder="请输入优惠说明"></textarea>
+										</div>
+										<span style="color: red"> * </span>
+									</div>
+									
+									<div class="space-4"></div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-primary" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+											&nbsp; &nbsp; &nbsp;
+											<a href="/admin/v1/order/index"><button class="btn" type="button">
+												<i class="icon-undo bigger-110"></i>
+												返回
+											</button></a>
+										</div>
+									</div>
+
+									<div class="hr hr-24"></div>	
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+
+{/block}
+
+{block name="js"} 
+		<!-- inline scripts related to this page -->
+<script type="text/javascript">
+
+    $("form").submit(function(){
+      	var reduce_price=$("input[name='reduce_price']").val();
+      	var reduce_explain=$("textarea[name='reduce_explain']").val();
+
+		if(reduce_price==''){
+			layer.msg('请输入特别优惠金额');
+			return false;
+		}
+		if(reduce_explain==''){
+			layer.msg("请输入特别优惠说明");
+			return false;
+		}
+
+        $.ajax({
+            url:'/admin/v1/order/edit_order',
+            data:new FormData($('#form')[0]),
+            processData: false,
+            contentType: false,
+            type: 'post',
+            success: function($data) {
+                if($data.code == 200){
+                    layer.open({
+						content: $data.message,
+						btn: ['确定'],
+							yes: function(index, layero){
+								location.href='/admin/v1/order/index';
+							},
+							cancel: function(){ 
+							//右上角关闭回调
+							return false //该代码可禁止点击该按钮关闭
+							}
+					});
+                    
+                }else{
+                	layer.msg($data.message, {icon: 5});
+                }
+            }
+    	});
+        return false;
+    });
+        
+</script>
+	
+{/block}

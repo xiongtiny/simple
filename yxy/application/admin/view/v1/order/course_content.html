@@ -1,0 +1,386 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<style type="text/css">
+	input{width:100%}
+	.row span{color: #2679b5; font-weight: bold;}
+	.col-sm-2{padding-top: 4px;}
+</style>
+ {/block}
+{block name="main"}
+
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">主页</a>
+			</li>
+
+			<li>
+				<a href="/admin/v1/order/index">订单管理</a>
+			</li>
+			<li class="active">课程详情</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+
+		<div class="page-content">
+			<div class="page-header">
+				<a href="/admin/v1/order/course_content?id={$order.id}"><button class="btn disabled btn-success">课程详情</button></a>
+				<a href="/admin/v1/order/order_content?id={$order['id']}"><button class="btn btn-warning">历史订单</button></a>
+				<a href="/admin/v1/order/order_refund_content?id={$order['id']}"><button class="btn btn-primary">退款详情</button></a>
+			</div>
+
+		{if !empty($order->course_id)}
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 年级 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->grade->name}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 科目 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->subject->name}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 季节 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->season->name}
+
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课方式 </label>
+						<div class="col-sm-2">
+							{if $order->getCourse->mode==1}
+							线上直播
+							{else/}
+							面授
+							{/if}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课类型 </label>
+						<div class="col-sm-2">
+							班级课
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 免费试听 </label>
+						<div class="col-sm-2">
+							{if $order->getCourse->free_trial==1}
+							是
+							{else/}
+							否
+							{/if}
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程名称 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->name}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课时数 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->hours}
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 计费形式 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->getCharging->name}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程价格 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->price}
+
+						</div>
+					</div>
+
+					<!--<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程详情 </label>
+						<div class="col-sm-3">
+							123
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程大纲 </label>
+						<div class="col-sm-3">
+							123
+						</div>
+					</div>-->
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 开课时间 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->start_time}
+
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 结课时间 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->end_time}
+
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 上课地址 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->course_address}
+
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 班主任 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->teacherIndex->name}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程老师 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->teacherTop->name}
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 限量人数 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->bady_max}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 在学人数 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->study_num}
+
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 优惠金额 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->activity_price}
+
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 优惠描述 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->activity_desc}
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 适用范围 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->range}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 是否上线 </label>
+						<div class="col-sm-2">
+							{if $order->getCourse->on_line==0}
+							否
+							{else}
+							是
+							{/if}
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 星级 </label>
+						<div class="col-sm-2">
+							{$order->getCourse->start}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 推荐 </label>
+						<div class="col-sm-2">
+							{if $order->getCourse->recommend==0}
+							否
+							{else/}
+							是
+							{/if}
+						</div>
+					</div>
+					
+					<div class="space-4"></div>
+
+				</form>
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+		{else/}
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+				<form class="form-horizontal" role="form" id="form">
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 年级 </label>
+						<div class="col-sm-2">
+							{$order->getClassHour->grade->name}1
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课方式 </label>
+						<div class="col-sm-2">
+							{if $order->getClassHour->mode==1}
+							线上直播
+							{else/}
+							面授
+							{/if}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 授课类型 </label>
+						<div class="col-sm-2">
+							1v1
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程名称 </label>
+						<div class="col-sm-2">
+							{$order->getClassHour->name}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课时数 </label>
+						<div class="col-sm-2">
+							{$order->getClassHour->hours}
+						</div>
+					</div>
+
+					<div class="form-group">
+
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 课程价格 </label>
+						<div class="col-sm-2">
+							{$order->getClassHour->price}
+
+						</div>
+					</div>
+
+
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 优惠金额 </label>
+						<div class="col-sm-2">
+							{$order->getClassHour->activity_price}
+
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 优惠描述 </label>
+						<div class="col-sm-2">
+							{$order->getClassHour->activity_desc}
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 适用范围 </label>
+						<div class="col-sm-2">
+							{$order->getClassHour->range}
+						</div>
+						<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 是否上线 </label>
+						<div class="col-sm-2">
+							{if $order->getClassHour->on_line==0}
+							否
+							{else}
+							是
+							{/if}
+						</div>
+					</div>
+
+					<div class="space-4"></div>
+
+				</form>
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+
+		{/if}
+	</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+</div><!-- /.main-container-inner -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+	<i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif]-->
+
+<!--[if !IE]> -->
+
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='/admin/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+</script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+	window.jQuery || document.write("<script src='/admin/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='/admin/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="/admin/js/bootstrap.min.js"></script>
+<script src="/admin/js/typeahead-bs2.min.js"></script>
+
+<!-- page specific plugin scripts -->
+
+<!--[if lte IE 8]>
+<script src="/admin/js/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/admin/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/admin/js/jquery.ui.touch-punch.min.js"></script>
+<script src="/admin/js/chosen.jquery.min.js"></script>
+<script src="/admin/js/fuelux/fuelux.spinner.min.js"></script>
+<script src="/admin/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="/admin/js/date-time/bootstrap-timepicker.min.js"></script>
+<script src="/admin/js/date-time/moment.min.js"></script>
+<script src="/admin/js/date-time/daterangepicker.min.js"></script>
+<script src="/admin/js/bootstrap-colorpicker.min.js"></script>
+<script src="/admin/js/jquery.knob.min.js"></script>
+<script src="/admin/js/jquery.autosize.min.js"></script>
+<script src="/admin/js/jquery.inputlimiter.1.3.1.min.js"></script>
+<script src="/admin/js/jquery.maskedinput.min.js"></script>
+<script src="/admin/js/bootstrap-tag.min.js"></script>
+
+<!-- ace scripts -->
+
+<script src="/admin/js/ace-elements.min.js"></script>
+<script src="/admin/js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+
+{/block}
+
+{block name="js"}
+<!-- inline scripts related to this page -->
+
+<script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+    var editor = UE.getEditor('course_desc');
+    var editor = UE.getEditor('course_num');
+</script>
+
+
+{/block}

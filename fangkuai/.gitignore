@@ -1,0 +1,5 @@
+.idea
+.env
+composer.lock
+*.log
+thinkphp

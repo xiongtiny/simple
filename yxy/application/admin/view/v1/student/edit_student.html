@@ -1,0 +1,893 @@
+{extend name="v1/public:base" /}
+
+{block name="style"}
+<!-- 编辑页面style -->
+<link href="/admin/city/css/city-picker.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	input{width:100%}
+	.row span{color: #2679b5; font-weight: bold;}
+</style>
+ {/block}
+{block name="main"}
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="/admin/v1/student/index">学生管理</a>
+							</li>
+							<li class="active">编辑学生</li>
+							【姓名：{$user_data['username']} &nbsp;&nbsp; 学号：{$user_data['number']}】
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<button class="btn disabled btn-success">编辑学生</button>
+							<a href="/admin/v1/student/talk?id={$user_data['id']}"><button class="btn btn-primary">沟通历史</button></a>
+						</div>
+
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form class="form-horizontal" action="/admin/v1/student/edit_post" method="post" role="form" id="form">
+									<input type="hidden" name="id" value="{$user_data['id']}"  placeholder="姓名" />
+									<span>基本信息</span><div class="hr"></div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 姓名 </label>
+										<div class="col-sm-2">
+											<input type="text" name="username" value="{$user_data['username']}"  placeholder="姓名" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 性别 </label>
+										<div class="col-sm-2">
+											<select class="form-control" name="sex" id="form-field-select-1">
+												<!--<option value="{$user_data['sex']}">{if condition="$user_data['sex'] eq 1"}男{elseif condition="$user_data['sex'] eq 2"/}女{else /}请选择{/if}</option>-->
+												<option value="1" {if $user_data['sex']==1}selected{/if}>男</option>
+												<option value="2"  {if $user_data['sex']==2}selected{/if}>女</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 手机号 </label>
+										<div class="col-sm-2">
+											<input type="number" name="phone" value="{$user_data['phone']}" placeholder="手机号" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 学校 </label>
+										<div class="col-sm-2">
+											<input type="text" name="school" value="{$user_data_info['school']}" placeholder="学校" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 年级 </label>
+										<div class="col-sm-2">
+											<select class="form-control" name="grade" id="form-field-select-1">
+												{foreach $grades as $grade}
+												<option value="{$grade.id}" {if $grade.id==$user_data_info['grade']}selected{/if}>{$grade.name}</option>
+												{/foreach}
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 所在地区 </label>
+										<div class="col-sm-2">
+											<input id="city-picker3" name="pro_ci_ar" type="text" data-toggle="city-picker">
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 详细地址 </label>
+										<div class="col-sm-2">
+											<input type="text" name="address" value="{$user_data_info['address']}" placeholder="详细地址" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 微信 </label>
+										<div class="col-sm-2">
+											<input type="text" name="weixin" value="{$user_data_info['weixin']}" placeholder="微信" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 邮箱 </label>
+										<div class="col-sm-2">
+											<input type="email" name="email" value="{$user_data_info['email']}" placeholder="邮箱" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 支付宝 </label>
+										<div class="col-sm-2">
+											<input type="text" name="alipay" value="{$user_data_info['alipay']}" placeholder="支付宝" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 银行账号 </label>
+										<div class="col-sm-2">
+											<input type="number" name="bank_card" value="{$user_data_info['bank_card']}" placeholder="银行账号" />
+										</div>
+									</div>
+
+									<div class="hr-24"></div>
+									<span>家长信息</span><div class="hr"></div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 父亲姓名 </label>
+										<div class="col-sm-2">
+											<input type="text" name="father_name" value="{$user_data_info['father_name']}" placeholder="父亲姓名" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 父亲电话 </label>
+										<div class="col-sm-2">
+											<input type="text" name="father_phone" value="{$user_data_info['father_phone']}" placeholder="父亲电话" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 父亲微信号 </label>
+										<div class="col-sm-2">
+											<input type="text" name="father_weixin" value="{$user_data_info['father_weixin']}" placeholder="父亲微信号" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 母亲姓名 </label>
+										<div class="col-sm-2">
+											<input type="text" name="mother_name" value="{$user_data_info['mother_name']}" placeholder="母亲姓名" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 母亲电话 </label>
+										<div class="col-sm-2">
+											<input type="text" name="mother_phone" value="{$user_data_info['mother_phone']}" placeholder="母亲电话" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 母亲微信号 </label>
+										<div class="col-sm-2">
+											<input type="text" name="mother_weixin" value="{$user_data_info['mother_weixin']}" placeholder="母亲微信号" />
+										</div>
+									</div>
+
+									<div class="hr-24"></div>
+									<span>账户信息</span><div class="hr"></div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 登录账号 </label>
+										<div class="col-sm-2">
+											<input type="text" name="number" value="{$user_data['number']}" placeholder="登录账号" />
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 密码 </label>
+										<div class="col-sm-2">
+											<input type="password" name="password" value="{$user_data['password']}" placeholder="密码" />
+										</div>
+<!-- 										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 昵称 </label>
+										<div class="col-sm-2">
+											<input type="text" name="nickname" value="{$user_data_info['nickname']}" placeholder="昵称" />
+										</div> -->
+									</div>
+
+									<div class="hr-24"></div>
+									<span>渠道信息</span><div class="hr"></div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 招生来源 </label>
+										<div class="col-sm-2">
+											<select class="form-control" name="source" id="form-field-select-1">
+												<option value="1" {if $user_data_info['source']==1}selected{/if}>在线报名</option>
+												<option value="2" {if $user_data_info['source']==2}selected{/if}>在线注册</option>
+												<option value="3" {if $user_data_info['source']==3}selected{/if}>在线咨询</option>
+												<option value="4" {if $user_data_info['source']==4}selected{/if}>地推路演</option>
+												<option value="5" {if $user_data_info['source']==5}selected{/if}>转介绍</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 介绍人 </label>
+										<div class="col-sm-2">
+											<input type="text" name="intro" value="{$user_data_info['intro']}" placeholder="介绍人" />
+										</div>
+									</div>
+
+									<div class="hr-24"></div>
+									<span>负责人</span>&nbsp;&nbsp;<span style="color: red">（填写后无法修改）</span><div class="hr"></div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 咨询老师 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+											<!--<input type="text" name="consolution" value="{$user_data_info['consolution']}" placeholder="咨询老师" {if $user_data_info['consolution'] neq ''} disabled {/if}/>-->
+											<select name="consolution" id="">
+												{foreach $consolution as $a}
+												<option value="{$a->id}" {if $a->id==$user_data_info['consolution']}selected disabled{/if}>{$a->name}</option>
+												{/foreach}
+											</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 班主任 <span style="color: red">*</span></label>
+										<div class="col-sm-2">
+											<select name="headmaster">
+												{foreach $headmaster as $a}
+												<option value="{$a->id}" {if $a->id==$user_data_info['headmaster']}selected disabled{/if}>{$a->name}</option>
+												{/foreach}
+											</select>
+										</div>
+									</div>
+
+									<div class="hr-24"></div>
+									<span>其他</span><div class="hr"></div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 意向课程 </label>
+										<div class="col-sm-2">
+											<select class="form-control" name="course">
+												{foreach $subjects as $subject}
+												<option value="{$subject->id}" {if $subject->id==$user_data_info['course']}selected{/if}>{$subject->name}</option>
+												{/foreach}
+											</select>
+										</div>
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 录入时间 </label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="时间" disabled="" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 备注 </label>
+										<div class="col-sm-5">
+											<textarea name="remarks" style="width:100%" placeholder="请输入备注信息">{$user_data_info['remarks']}</textarea>
+										</div>
+									</div>
+
+			
+									<div class="space-4"></div>
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-primary" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+											&nbsp; &nbsp; &nbsp;
+											<a href="/admin/v1/student/index"><button class="btn" type="button">
+												<i class="icon-undo bigger-110"></i>
+												返回
+											</button></a>
+										</div>
+									</div>
+
+									<div class="hr hr-24"></div>	
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+{/block}
+
+{block name="js"} 
+		<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    $("form").submit(function(){
+	    $.ajax({
+	        url:'/admin/v1/student/edit_post',
+	        data:new FormData($('#form')[0]),
+	        processData: false,
+	        contentType: false,
+	        type: 'post',
+	        success: function($data) {
+	            if($data.code == 200){
+	                console.log($data.status);
+	                layer.open({
+						content: $data.message,
+						btn: ['确定'],
+							yes: function(index, layero){
+								location.href='/admin/v1/student/index';
+							},
+							cancel: function(){ 
+							//右上角关闭回调
+							return false //该代码可禁止点击该按钮关闭
+							}
+					});
+	                
+	            }else{
+	            	layer.msg($data.message, {icon: 5});
+	            }
+	        }
+		});
+        return false;
+    });
+        
+</script>	
+<script src="/admin/city/js/jquery.js"></script>
+<script src="/admin/city/js/bootstrap.js"></script>
+<script src="/admin/city/js/city-picker.data.js"></script>
+<!--<script src="/admin/city/js/city-picker.js"></script>-->
+<script src="/admin/city/js/main.js"></script>
+<script type="text/javascript">
+    /*!
+ * CityPicker v1.0.2
+ * https://github.com/tshi0912/citypicker
+ *
+ * Copyright (c) 2015-2016 Tao Shi
+ * Released under the MIT license
+ *
+ * Date: 2016-02-29T12:11:36.477Z
+ */
+
+    (function (factory) {
+        if (typeof define === 'function' && define.amd) {
+            // AMD. Register as anonymous module.
+            define(['jquery', 'ChineseDistricts'], factory);
+        } else if (typeof exports === 'object') {
+            // Node / CommonJS
+            factory(require('jquery'), require('ChineseDistricts'));
+        } else {
+            // Browser globals.
+            factory(jQuery, ChineseDistricts);
+        }
+    })(function ($, ChineseDistricts) {
+
+        'use strict';
+
+        if (typeof ChineseDistricts === 'undefined') {
+            throw new Error('The file "city-picker.data.js" must be included first!');
+        }
+
+        var NAMESPACE = 'citypicker';
+        var EVENT_CHANGE = 'change.' + NAMESPACE;
+        var PROVINCE = 'province';
+        var CITY = 'city';
+        var DISTRICT = 'district';
+
+        function CityPicker(element, options) {
+            this.$element = $(element);
+            this.$dropdown = null;
+            this.options = $.extend({}, CityPicker.DEFAULTS, $.isPlainObject(options) && options);
+            this.active = false;
+            this.dems = [];
+            this.needBlur = false;
+            this.init();
+        }
+
+        CityPicker.prototype = {
+            constructor: CityPicker,
+
+            init: function () {
+
+                this.defineDems();
+
+                this.render();
+
+                this.bind();
+
+                this.active = true;
+            },
+
+            render: function () {
+                var p = this.getPosition(),
+                    placeholder = this.$element.attr('placeholder') || this.options.placeholder,
+                    textspan = '<span class="city-picker-span" style="' +
+                        this.getWidthStyle(p.width) + 'height:' +
+                        p.height + 'px;line-height:' + (p.height - 1) + 'px;">' +
+                        (placeholder ? '<span class="placeholder">' + placeholder + '</span>' : '') +
+                        '<span class="title"></span><div class="arrow"></div>' + '</span>',
+
+                    dropdown = '<div class="city-picker-dropdown" style="left:0px;top:100%;' +
+                        this.getWidthStyle(p.width, true) + '">' +
+                        '<div class="city-select-wrap">' +
+                        '<div class="city-select-tab">' +
+                        '<a class="active" data-count="province">省份</a>' +
+                        (this.includeDem('city') ? '<a data-count="city">城市</a>' : '') +
+                        (this.includeDem('district') ? '<a data-count="district">区县</a>' : '') + '</div>' +
+                        '<div class="city-select-content">' +
+                        '<div class="city-select province" data-count="province"></div>' +
+                        (this.includeDem('city') ? '<div class="city-select city" data-count="city"></div>' : '') +
+                        (this.includeDem('district') ? '<div class="city-select district" data-count="district"></div>' : '') +
+                        '</div></div>';
+
+                this.$element.addClass('city-picker-input');
+                this.$textspan = $(textspan).insertAfter(this.$element);
+                this.$dropdown = $(dropdown).insertAfter(this.$textspan);
+                var $select = this.$dropdown.find('.city-select');
+
+                // setup this.$province, this.$city and/or this.$district object
+                $.each(this.dems, $.proxy(function (i, type) {
+                    this['$' + type] = $select.filter('.' + type + '');
+                }, this));
+
+                this.refresh();
+            },
+
+            refresh: function (force) {
+                // clean the data-item for each $select
+                var $select = this.$dropdown.find('.city-select');
+                $select.data('item', null);
+                // parse value from value of the target $element
+                var val = this.$element.val() || '';
+                val = val.split('/');
+                $.each(this.dems, $.proxy(function (i, type) {
+                    if (val[i] && i < val.length) {
+                        this.options[type] = val[i];
+                    } else if (force) {
+                        this.options[type] = '';
+                    }
+                    this.output(type);
+                }, this));
+                this.tab(PROVINCE);
+                this.feedText();
+                this.feedVal();
+            },
+
+            defineDems: function () {
+                var stop = false;
+                $.each([PROVINCE, CITY, DISTRICT], $.proxy(function (i, type) {
+                    if (!stop) {
+                        this.dems.push(type);
+                    }
+                    if (type === this.options.level) {
+                        stop = true;
+                    }
+                }, this));
+            },
+
+            includeDem: function (type) {
+                return $.inArray(type, this.dems) !== -1;
+            },
+
+            getPosition: function () {
+                var p, h, w, s, pw;
+                p = this.$element.position();
+                s = this.getSize(this.$element);
+                h = s.height;
+                w = s.width;
+                if (this.options.responsive) {
+                    pw = this.$element.offsetParent().width();
+                    if (pw) {
+                        w = w / pw;
+                        if (w > 0.99) {
+                            w = 1;
+                        }
+                        w = w * 100 + '%';
+                    }
+                }
+
+                return {
+                    top: p.top || 0,
+                    left: p.left || 0,
+                    height: h,
+                    width: w
+                };
+            },
+
+            getSize: function ($dom) {
+                var $wrap, $clone, sizes;
+                if (!$dom.is(':visible')) {
+                    $wrap = $("<div />").appendTo($("body"));
+                    $wrap.css({
+                        "position": "absolute !important",
+                        "visibility": "hidden !important",
+                        "display": "block !important"
+                    });
+
+                    $clone = $dom.clone().appendTo($wrap);
+
+                    sizes = {
+                        width: $clone.outerWidth(),
+                        height: $clone.outerHeight()
+                    };
+
+                    $wrap.remove();
+                } else {
+                    sizes = {
+                        width: $dom.outerWidth(),
+                        height: $dom.outerHeight()
+                    };
+                }
+
+                return sizes;
+            },
+
+            getWidthStyle: function (w, dropdown) {
+                if (this.options.responsive && !$.isNumeric(w)) {
+                    return 'width:' + w + ';';
+                } else {
+                    return 'width:' + (dropdown ? Math.max(320, w) : w) + 'px;';
+                }
+            },
+
+            bind: function () {
+                var $this = this;
+
+                $(document).on('click', (this._mouteclick = function (e) {
+                    var $target = $(e.target);
+                    var $dropdown, $span, $input;
+                    if ($target.is('.city-picker-span')) {
+                        $span = $target;
+                    } else if ($target.is('.city-picker-span *')) {
+                        $span = $target.parents('.city-picker-span');
+                    }
+                    if ($target.is('.city-picker-input')) {
+                        $input = $target;
+                    }
+                    if ($target.is('.city-picker-dropdown')) {
+                        $dropdown = $target;
+                    } else if ($target.is('.city-picker-dropdown *')) {
+                        $dropdown = $target.parents('.city-picker-dropdown');
+                    }
+                    if ((!$input && !$span && !$dropdown) ||
+                        ($span && $span.get(0) !== $this.$textspan.get(0)) ||
+                        ($input && $input.get(0) !== $this.$element.get(0)) ||
+                        ($dropdown && $dropdown.get(0) !== $this.$dropdown.get(0))) {
+                        $this.close(true);
+                    }
+
+                }));
+
+                this.$element.on('change', (this._changeElement = $.proxy(function () {
+                    this.close(true);
+                    this.refresh(true);
+                }, this))).on('focus', (this._focusElement = $.proxy(function () {
+                    this.needBlur = true;
+                    this.open();
+                }, this))).on('blur', (this._blurElement = $.proxy(function () {
+                    if (this.needBlur) {
+                        this.needBlur = false;
+                        this.close(true);
+                    }
+                }, this)));
+
+                this.$textspan.on('click', function (e) {
+                    var $target = $(e.target), type;
+                    $this.needBlur = false;
+                    if ($target.is('.select-item')) {
+                        type = $target.data('count');
+                        $this.open(type);
+                    } else {
+                        if ($this.$dropdown.is(':visible')) {
+                            $this.close();
+                        } else {
+                            $this.open();
+                        }
+                    }
+                }).on('mousedown', function () {
+                    $this.needBlur = false;
+                });
+
+                this.$dropdown.on('click', '.city-select a', function () {
+                    var $select = $(this).parents('.city-select');
+                    var $active = $select.find('a.active');
+                    var last = $select.next().length === 0;
+                    $active.removeClass('active');
+                    $(this).addClass('active');
+                    if ($active.data('code') !== $(this).data('code')) {
+                        $select.data('item', {
+                            address: $(this).attr('title'), code: $(this).data('code')
+                        });
+                        $(this).trigger(EVENT_CHANGE);
+                        $this.feedText();
+                        $this.feedVal();
+                        if (last) {
+                            $this.close();
+                        }
+                    }
+                }).on('click', '.city-select-tab a', function () {
+                    if (!$(this).hasClass('active')) {
+                        var type = $(this).data('count');
+                        $this.tab(type);
+                    }
+                }).on('mousedown', function () {
+                    $this.needBlur = false;
+                });
+
+                if (this.$province) {
+                    this.$province.on(EVENT_CHANGE, (this._changeProvince = $.proxy(function () {
+                        this.output(CITY);
+                        this.output(DISTRICT);
+                        this.tab(CITY);
+                    }, this)));
+                }
+
+                if (this.$city) {
+                    this.$city.on(EVENT_CHANGE, (this._changeCity = $.proxy(function () {
+                        this.output(DISTRICT);
+                        this.tab(DISTRICT);
+                    }, this)));
+                }
+            },
+
+            open: function (type) {
+                type = type || PROVINCE;
+                this.$dropdown.show();
+                this.$textspan.addClass('open').addClass('focus');
+                this.tab(type);
+            },
+
+            close: function (blur) {
+                this.$dropdown.hide();
+                this.$textspan.removeClass('open');
+                if (blur) {
+                    this.$textspan.removeClass('focus');
+                }
+            },
+
+            unbind: function () {
+
+                $(document).off('click', this._mouteclick);
+
+                this.$element.off('change', this._changeElement);
+                this.$element.off('focus', this._focusElement);
+                this.$element.off('blur', this._blurElement);
+
+                this.$textspan.off('click');
+                this.$textspan.off('mousedown');
+
+                this.$dropdown.off('click');
+                this.$dropdown.off('mousedown');
+
+                if (this.$province) {
+                    this.$province.off(EVENT_CHANGE, this._changeProvince);
+                }
+
+                if (this.$city) {
+                    this.$city.off(EVENT_CHANGE, this._changeCity);
+                }
+            },
+
+            getText: function () {
+                var text = '';
+                this.$dropdown.find('.city-select')
+                    .each(function () {
+                        var item = $(this).data('item'),
+                            type = $(this).data('count');
+                        if (item) {
+                            text += ($(this).hasClass('province') ? '' : '/') + '<span class="select-item" data-count="' +
+                                type + '" data-code="' + item.code + '">' + item.address + '</span>';
+                        }
+                    });
+                return text;
+            },
+
+            getPlaceHolder: function () {
+                return this.$element.attr('placeholder') || this.options.placeholder;
+            },
+
+            feedText: function () {
+                var text = this.getText();
+                if (text) {
+                    this.$textspan.find('>.placeholder').hide();
+                    this.$textspan.find('>.title').html(this.getText()).show();
+                } else {
+                    this.$textspan.find('>.placeholder').text(this.getPlaceHolder()).show();
+                    this.$textspan.find('>.title').html('').hide();
+                }
+            },
+
+            getVal: function () {
+                var text = '';
+                this.$dropdown.find('.city-select')
+                    .each(function () {
+                        var item = $(this).data('item');
+                        if (item) {
+                            text += ($(this).hasClass('province') ? '' : '/') + item.address;
+                        }
+                    });
+                return text;
+            },
+
+            feedVal: function () {
+                this.$element.val(this.getVal());
+            },
+
+            output: function (type) {
+                var options = this.options;
+                //var placeholders = this.placeholders;
+                var $select = this['$' + type];
+                var data = type === PROVINCE ? {} : [];
+                var item;
+                var districts;
+                var code;
+                var matched = null;
+                var value;
+
+                if (!$select || !$select.length) {
+                    return;
+                }
+
+                item = $select.data('item');
+
+                value = (item ? item.address : null) || options[type];
+
+                code = (
+                    type === PROVINCE ? 86 :
+                        type === CITY ? this.$province && this.$province.find('.active').data('code') :
+                            type === DISTRICT ? this.$city && this.$city.find('.active').data('code') : code
+                );
+
+                districts = $.isNumeric(code) ? ChineseDistricts[code] : null;
+
+                if ($.isPlainObject(districts)) {
+                    $.each(districts, function (code, address) {
+                        var provs;
+                        if (type === PROVINCE) {
+                            provs = [];
+                            for (var i = 0; i < address.length; i++) {
+                                if (address[i].address === value) {
+                                    matched = {
+                                        code: address[i].code,
+                                        address: address[i].address
+                                    };
+                                }
+                                provs.push({
+                                    code: address[i].code,
+                                    address: address[i].address,
+                                    selected: address[i].address === value
+                                });
+                            }
+                            data[code] = provs;
+                        } else {
+                            if (address === value) {
+                                matched = {
+                                    code: code,
+                                    address: address
+                                };
+                            }
+                            data.push({
+                                code: code,
+                                address: address,
+                                selected: address === value
+                            });
+                        }
+                    });
+                }
+
+                $select.html(type === PROVINCE ? this.getProvinceList(data) :
+                    this.getList(data, type));
+                $select.data('item', matched);
+            },
+
+            getProvinceList: function (data) {
+                var list = [],
+                    $this = this,
+                    simple = this.options.simple;
+
+                $.each(data, function (i, n) {
+                    list.push('<dl class="clearfix">');
+                    list.push('<dt>' + i + '</dt><dd>');
+                    $.each(n, function (j, m) {
+                        list.push(
+                            '<a' +
+                            ' title="' + (m.address || '') + '"' +
+                            ' data-code="' + (m.code || '') + '"' +
+                            ' class="' +
+                            (m.selected ? ' active' : '') +
+                            '">' +
+                            ( simple ? $this.simplize(m.address, PROVINCE) : m.address) +
+                            '</a>');
+                    });
+                    list.push('</dd></dl>');
+                });
+
+                return list.join('');
+            },
+
+            getList: function (data, type) {
+                var list = [],
+                    $this = this,
+                    simple = this.options.simple;
+                list.push('<dl class="clearfix"><dd>');
+
+                $.each(data, function (i, n) {
+                    list.push(
+                        '<a' +
+                        ' title="' + (n.address || '') + '"' +
+                        ' data-code="' + (n.code || '') + '"' +
+                        ' class="' +
+                        (n.selected ? ' active' : '') +
+                        '">' +
+                        ( simple ? $this.simplize(n.address, type) : n.address) +
+                        '</a>');
+                });
+                list.push('</dd></dl>');
+
+                return list.join('');
+            },
+
+            simplize: function (address, type) {
+                address = address || '';
+                if (type === PROVINCE) {
+                    return address.replace(/[省,市,自治区,壮族,回族,维吾尔]/g, '');
+                } else if (type === CITY) {
+                    return address.replace(/[市,地区,回族,蒙古,苗族,白族,傣族,景颇族,藏族,彝族,壮族,傈僳族,布依族,侗族]/g, '')
+                        .replace('哈萨克', '').replace('自治州', '').replace(/自治县/, '');
+                } else if (type === DISTRICT) {
+                    return address.length > 2 ? address.replace(/[市,区,县,旗]/g, '') : address;
+                }
+            },
+
+            tab: function (type) {
+                var $selects = this.$dropdown.find('.city-select');
+                var $tabs = this.$dropdown.find('.city-select-tab > a');
+                var $select = this['$' + type];
+                var $tab = this.$dropdown.find('.city-select-tab > a[data-count="' + type + '"]');
+                if ($select) {
+                    $selects.hide();
+                    $select.show();
+                    $tabs.removeClass('active');
+                    $tab.addClass('active');
+                }
+            },
+
+            reset: function () {
+                this.$element.val(null).trigger('change');
+            },
+
+            destroy: function () {
+                this.unbind();
+                this.$element.removeData(NAMESPACE).removeClass('city-picker-input');
+                this.$textspan.remove();
+                this.$dropdown.remove();
+            }
+        };
+
+        CityPicker.DEFAULTS = {
+            simple: false,
+            responsive: false,
+            placeholder: '{if is_null($user_data->UserInfo)}请选择省/市/区{else/}{$user_data->UserInfo->getProvince->name}/{$user_data->UserInfo->getCity->name}/{$user_data->UserInfo->getArea->name}{/if}',
+            level: 'district',
+            province: '',
+            city: '',
+            district: ''
+        };
+
+        CityPicker.setDefaults = function (options) {
+            $.extend(CityPicker.DEFAULTS, options);
+        };
+
+        // Save the other citypicker
+        CityPicker.other = $.fn.citypicker;
+
+        // Register as jQuery plugin
+        $.fn.citypicker = function (option) {
+            var args = [].slice.call(arguments, 1);
+
+            return this.each(function () {
+                var $this = $(this);
+                var data = $this.data(NAMESPACE);
+                var options;
+                var fn;
+
+                if (!data) {
+                    if (/destroy/.test(option)) {
+                        return;
+                    }
+
+                    options = $.extend({}, $this.data(), $.isPlainObject(option) && option);
+                    $this.data(NAMESPACE, (data = new CityPicker(this, options)));
+                }
+
+                if (typeof option === 'string' && $.isFunction(fn = data[option])) {
+                    fn.apply(data, args);
+                }
+            });
+        };
+
+        $.fn.citypicker.Constructor = CityPicker;
+        $.fn.citypicker.setDefaults = CityPicker.setDefaults;
+
+        // No conflict
+        $.fn.citypicker.noConflict = function () {
+            $.fn.citypicker = CityPicker.other;
+            return this;
+        };
+
+        $(function () {
+            $('[data-toggle="city-picker"]').citypicker();
+        });
+    });
+</script>
+{/block}

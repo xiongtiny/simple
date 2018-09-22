@@ -1,0 +1,131 @@
+{include file="public/head"/}
+<!-- 内容区域 -->
+<style type="text/css">
+.am-u-sm-9 span{
+   border: 1px solid #6F7579;
+   padding: 5px 0 3px 7px;
+   font-size: 14px;  
+   margin-left: 0.1em; 
+} 
+</style>
+
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+<div class="row">
+
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">农场详情</div>
+                                <div class="widget-function am-fr">
+                                   
+                                </div>
+                            </div>
+                            <div class="widget-body am-fr">
+
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" action="/ami/farm/index">
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">姓名 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="user_id" class="tpl-form-input" id="user-name" value="{$user->get($data.user_id)->name}">
+                                            <small>Name</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">农场名称 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="name" class="tpl-form-input" id="user-name" value="{$data.name}">
+                                            <small>Farm Name</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">农场图片 </label>
+                                        <div class="am-u-sm-9">
+                                           <img src="{$data.img}">
+                                           <br/>
+                                            <small>Farm Img</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">农场地址 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="address" class="tpl-form-input" id="user-name" value="{$data.province}&nbsp;&nbsp;{$data.city}&nbsp;&nbsp;{$data.area}&nbsp;&nbsp;{$data.address}">
+                                            <small>Farm Address</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">联系电话 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="phone" class="tpl-form-input" id="user-name" value="{$data.phone}">
+                                            <small>Phone</small>
+                                        </div>
+                                    </div>                                                                    
+									<div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">设备编号 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="equipment_number" class="tpl-form-input" id="user-name" value="{$data.equipment_number}">
+                                            <small>Equipment Serial Number</small>
+                                        </div>
+                                    </div> 
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">面积—价格 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="price" class="tpl-form-input" id="user-name" value="{$data.acreage}平方米——{$data.price}元">
+                                            <small>Equipment Serial Number</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">租聘时间 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="price" class="tpl-form-input" id="user-name" value="{$data.lease_type}">
+                                            <small>Rent to Hire Time</small>
+                                        </div>
+                                    </div>   
+
+                                     <div class="am-form-group" >
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">提供服务 </label>
+                                        <div class="am-u-sm-9" style="margin-top: 0.5em;">
+                                            {volist name="service" id="vo"}
+                                                <span  name="describe">{$vo}&nbsp;&nbsp;</span>
+                                            {/volist}
+                                        </br>
+                                            <small >Service</small>
+                                        </div>
+                                            
+                                        
+                                    </div> 
+
+                                     <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">描述 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="describe" class="tpl-form-input" id="user-name" value="{$data.describe}">
+                                            <small>Describe</small>
+                                        </div>
+                                    </div>       
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">创建时间 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="create_time" class="tpl-form-input" id="user-name" value="{$data.create_time}">
+                                            <small>Create Time</small>
+                                        </div>
+                                    </div>  
+
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-9 am-u-sm-push-3">
+                                            <input type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="返回" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
